@@ -19,7 +19,9 @@ Duas sugestões sobre a implementação:
 
 ## Decisões tomadas
 
-**2026-09-15 — Identidade visual e estrutura do site.** Diretrizes de design (paleta gótico-vitoriana, tipografia Cormorant SC/Cormorant Garamond/Pinyon Script, tom de voz, estrutura de conteúdo por seção) definidas em `C:\Users\giova\Documents\documentos\wedding\diretrizes-site-casamento.md` (fora do repositório, arquivo pessoal). Decisão: manter a estrutura de **páginas separadas** já construída (`index.html`, `rsvp.html`, `local.html`, `presentes.html`) em vez de consolidar em uma única página com âncoras — menos retrabalho do que já foi feito nas Fases 1/2. A identidade visual (cores, fontes) foi aplicada em `css/style.css` e vale para todas as páginas.
+**2026-09-15 — Índice virou single-page com seções; RSVP e Presentes continuam páginas separadas.** Revisão da decisão anterior: `index.html` agora contém Hero, Sobre nós, A festa, Como chegar e FAQ como seções âncora de uma página só (`local.html` foi removido, conteúdo incorporado à seção `#como-chegar`), mas `rsvp.html` e `presentes.html` continuam como páginas próprias. "Sobre nós" e algumas respostas do FAQ (traje, crianças, duração da festa, opção vegetariana/vegana) ficaram marcadas como `[A definir]` — são conteúdo pessoal/factual que só as noivas podem preencher, não inventado pelo Claude Code.
+
+**2026-09-15 — Identidade visual e estrutura do site.** Diretrizes de design (paleta gótico-vitoriana, tipografia Cormorant SC/Cormorant Garamond/Pinyon Script, tom de voz, estrutura de conteúdo por seção) definidas em `C:\Users\giova\Documents\documentos\wedding\diretrizes-site-casamento.md` (fora do repositório, arquivo pessoal). A identidade visual (cores, fontes) foi aplicada em `css/style.css` e vale para todas as páginas.
 
 **2026-09-14 — Chave Pix: Mercado Pago, não Itaú.** A ideia inicial era usar a caixinha do Itaú, mas a chave aleatória que o app do Itaú gera para a caixinha ficou vinculada ao CPF da conta, não a uma chave EVP própria (confirmado ao decodificar dois BR Codes de teste gerados por lá — o campo de chave sempre voltava com 11 dígitos numéricos, formato de CPF). Optou-se por usar a chave aleatória do Mercado Pago/Mercado Livre (`79019b12-b967-4660-afdc-734b70d0ee7f`, formato EVP válido) para o QR de presentes. Isso não muda a arquitetura (Fase 4 continua igual), só o valor da constante `CHAVE_PIX` em `js/pix.js` quando essa fase for implementada.
 
@@ -27,19 +29,20 @@ Duas sugestões sobre a implementação:
 
 1. **Convidados** — lista que você pré-carrega: `Nome`
 2. **RSVPs** — respostas do formulário: `Timestamp, Nome, Telefone, QtdAcompanhantes, NomesAcompanhantes, Churrasco, Bebida`
-3. **PresentesEscolhidos** — log opcional, não trava nada: `Timestamp, Presente, Valor, NomeDeQuemEscolheu`
+3. **PresentesEscolhidos** — log opcional, não trava nada: `Timestamp, Presente, Valor` (sem coluna de quem escolheu — não é necessário registrar isso, e pode haver presente escolhido sem RSVP preenchido na mesma sessão)
 
 ## Estrutura do site (repositório GitHub Pages)
 
 ```
-index.html        → home / navegação
+index.html         → single-page: Hero, Sobre nós, A festa, Como chegar, FAQ
 rsvp.html          → formulário de presença
-local.html         → mapa + endereço da recepção
 presentes.html     → lista de presentes com QR Pix
-/js/app.js         → lógica geral
+/js/app.js         → config compartilhada (EXEC_URL) + carregamento de fontes
 /js/pix.js         → geração do payload BR Code + QR
 /js/rsvp.js        → autocomplete de nomes + envio do formulário
+/js/presentes.js   → catálogo de presentes + geração de QR
 /css/style.css
+/img/              → fotos reais dos presentes (vazia por enquanto)
 ```
 
 ## Apps Script (Web App único)

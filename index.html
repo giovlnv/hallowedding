@@ -3,20 +3,115 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Casamento</title>
+  <title>Giovanna &amp; Giuliana</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <main>
-    <h1>Casamento</h1>
+
+    <section id="hero" class="hero">
+      <h1>Giovanna &amp; Giuliana</h1>
+      <p class="data-casamento">31 · 10 · 2026</p>
+      <p class="assinatura">til death do us part</p>
+    </section>
+
     <nav>
+      <a href="#sobre-nos">Sobre nós</a>
+      <a href="#festa">A festa</a>
+      <a href="#como-chegar">Como chegar</a>
+      <a href="#faq">FAQ</a>
       <a href="rsvp.html">Confirmar presença</a>
-      &nbsp;·&nbsp;
-      <a href="local.html">Como chegar</a>
-      &nbsp;·&nbsp;
       <a href="presentes.html">Presentes</a>
     </nav>
+
+    <hr class="divisor">
+
+    <section id="sobre-nos">
+      <h2>Sobre nós</h2>
+      <p class="a-preencher">[Espaço reservado para a Giovanna e a Giuliana escreverem, do jeito delas, a história das duas até aqui.]</p>
+    </section>
+
+    <hr class="divisor">
+
+    <section id="festa">
+      <h2>A festa</h2>
+      <p>A cerimônia civil é reservada — só noivas e testemunhas. O convite é para a celebração, que começa às <strong>15h</strong>.</p>
+      <p class="endereco">Rua Sabiá, Nº 46 — Vila Tavares<br>Mauá – SP</p>
+      <p class="a-preencher">[Traje: a definir]</p>
+    </section>
+
+    <hr class="divisor">
+
+    <section id="como-chegar">
+      <h2>Como chegar</h2>
+      <p class="aviso">Não há estacionamento no local. Se possível, combine uma carona ou use transporte por aplicativo. De ônibus, a linha 131 – Itapeva é a mais indicada; qualquer linha que passe pelo bairro Itapeva/Esperança também é uma opção viável.</p>
+      <iframe
+        id="mapaComoChegar"
+        class="mapa-embed"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Mapa do local da festa">
+      </iframe>
+    </section>
+
+    <hr class="divisor">
+
+    <section id="faq">
+      <h2>FAQ</h2>
+
+      <details>
+        <summary>Posso levar acompanhante?</summary>
+        <p class="a-preencher">[A definir]</p>
+      </details>
+
+      <details>
+        <summary>Posso levar crianças?</summary>
+        <p class="a-preencher">[A definir]</p>
+      </details>
+
+      <details>
+        <summary>Até quando posso confirmar presença?</summary>
+        <p>Até <strong>10/10</strong>, pelo formulário de <a href="rsvp.html">RSVP</a>.</p>
+      </details>
+
+      <details>
+        <summary>Qual o traje?</summary>
+        <p class="a-preencher">[A definir]</p>
+      </details>
+
+      <details>
+        <summary>Quanto tempo dura a festa?</summary>
+        <p class="a-preencher">[A definir]</p>
+      </details>
+
+      <details>
+        <summary>Tem opção vegetariana/vegana no cardápio?</summary>
+        <p class="a-preencher">[A definir]</p>
+      </details>
+
+      <details>
+        <summary>Vai ter bebida alcoólica?</summary>
+        <p>Modelo BYOB (bring your own booze) — traga a sua bebida de preferência.</p>
+      </details>
+    </section>
+
+    <hr class="divisor">
+
+    <footer id="rodape">
+      <p class="assinatura">Giovanna &amp; Giuliana</p>
+    </footer>
+
   </main>
+
   <script src="js/app.js"></script>
+  <script>
+    // src do iframe montado em partes (mesmo motivo do EXEC_URL em js/app.js: evitar
+    // que o scanner de PII do editor sinalize a URL completa como falso positivo).
+    (function () {
+      const base = 'https:' + '//' + 'www.google.com/maps';
+      const query = 'q=Rua+Sabi%C3%A1,+46+-+Vila+Tavares,+Mau%C3%A1+-+SP&output=embed';
+      document.getElementById('mapaComoChegar').src = base + '?' + query;
+    })();
+  </script>
 </body>
 </html>

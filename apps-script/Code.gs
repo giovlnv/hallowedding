@@ -71,8 +71,7 @@ function gravarPresenteEscolhido(body) {
   sheet.appendRow([
     new Date(),
     body.presente,
-    body.valor || '',
-    body.nomeDeQuemEscolheu || ''
+    body.valor || ''
   ]);
 
   return ContentService

@@ -36,7 +36,10 @@ h1 {
 }
 
 nav {
-  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem 1.1rem;
   margin-bottom: 1.5rem;
 }
 
@@ -47,6 +50,59 @@ nav a {
   color: var(--cor-ouro);
   text-decoration: none;
   font-weight: 600;
+}
+
+.hero {
+  text-align: center;
+  padding: 1rem 0 0.5rem;
+}
+
+.hero h1 {
+  margin-bottom: 0.5rem;
+}
+
+.data-casamento {
+  font-family: "Cormorant SC", serif;
+  letter-spacing: 0.15em;
+  color: var(--cor-osso);
+  margin: 0;
+}
+
+.assinatura {
+  font-family: "Pinyon Script", cursive;
+  font-size: 1.6rem;
+  color: var(--cor-ouro);
+  margin: 0.5rem 0 0;
+}
+
+h2 {
+  font-family: "Cormorant SC", "Cormorant Garamond", serif;
+  font-size: 1.4rem;
+  color: var(--cor-ouro);
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.a-preencher {
+  color: var(--cor-osso);
+  opacity: 0.6;
+  font-style: italic;
+}
+
+details {
+  border-bottom: 1px solid var(--cor-vinho);
+  padding: 0.6rem 0;
+}
+
+summary {
+  font-family: "Cormorant SC", serif;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem 0 0.5rem;
 }
 
 hr, .divisor {
