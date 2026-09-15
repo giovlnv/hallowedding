@@ -1,9 +1,13 @@
-// Web App único: doGet devolve convidados + presentes, doPost grava RSVP ou log de presente escolhido.
+// Web App único: doGet devolve presentes (sempre) + convidados que batem com uma busca
+// (só quando pedida, pra não expor a lista inteira de convidados), doPost grava RSVP ou
+// log de presente escolhido.
 // Deploy: Extensões > Apps Script na planilha, colar este arquivo, "Implantar" > "Nova implantação" > tipo "App da Web".
 
 const SHEET_CONVIDADOS = 'Convidados';
 const SHEET_RSVPS = 'RSVPs';
 const SHEET_PRESENTES_ESCOLHIDOS = 'PresentesEscolhidos';
+const BUSCA_MIN_CARACTERES = 3;
+const BUSCA_MAX_RESULTADOS = 10;
 
 function doGet(e) {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_CONVIDADOS);
@@ -15,7 +19,14 @@ function doGet(e) {
   const colPresente = cabecalho.indexOf('Presentes');
   const colValor = cabecalho.indexOf('Preço');
 
-  const nomes = linhas.map(function (row) { return row[colNome]; }).filter(String);
+  const busca = ((e.parameter && e.parameter.busca) || '').trim().toLowerCase();
+  let nomes = [];
+  if (busca.length >= BUSCA_MIN_CARACTERES) {
+    nomes = linhas
+      .map(function (row) { return row[colNome]; })
+      .filter(function (nome) { return nome && nome.toLowerCase().indexOf(busca) !== -1; })
+      .slice(0, BUSCA_MAX_RESULTADOS);
+  }
 
   const presentes = linhas
     .map(function (row) { return { nome: row[colPresente], valor: row[colValor] }; })

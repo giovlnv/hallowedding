@@ -40,6 +40,7 @@ const APP_CONFIG = {
     const atual = paginaAtual();
     const nav = document.createElement('nav');
     nav.className = 'header-nav';
+    nav.id = 'headerNav';
     nav.setAttribute('aria-label', 'Seções do site');
 
     NAV_ITENS.forEach(function (item) {
@@ -57,12 +58,56 @@ const APP_CONFIG = {
     return nav;
   }
 
+  function montarHamburguer(header) {
+    const botao = document.createElement('button');
+    botao.type = 'button';
+    botao.className = 'header-hamburguer';
+    botao.setAttribute('aria-expanded', 'false');
+    botao.setAttribute('aria-controls', 'headerNav');
+    botao.setAttribute('aria-label', 'Abrir menu');
+    for (let i = 0; i < 3; i++) botao.appendChild(document.createElement('span'));
+
+    function fecharMenu() {
+      header.classList.remove('menu-aberto');
+      botao.setAttribute('aria-expanded', 'false');
+    }
+
+    botao.addEventListener('click', function () {
+      const aberto = header.classList.toggle('menu-aberto');
+      botao.setAttribute('aria-expanded', String(aberto));
+    });
+
+    header.addEventListener('click', function (evento) {
+      if (evento.target.tagName === 'A' && header.classList.contains('menu-aberto')) {
+        fecharMenu();
+      }
+    });
+
+    document.addEventListener('keydown', function (evento) {
+      if (evento.key === 'Escape' && header.classList.contains('menu-aberto')) {
+        fecharMenu();
+        botao.focus();
+      }
+    });
+
+    document.addEventListener('click', function (evento) {
+      if (header.classList.contains('menu-aberto') && !header.contains(evento.target)) {
+        fecharMenu();
+      }
+    });
+
+    return botao;
+  }
+
   function montarHeader() {
     const placeholder = document.getElementById('siteHeader');
     if (!placeholder) return;
 
     const header = document.createElement('header');
     header.className = 'site-header';
+
+    const inner = document.createElement('div');
+    inner.className = 'header-inner';
 
     const identidade = document.createElement('div');
     identidade.className = 'header-identidade';
@@ -83,8 +128,10 @@ const APP_CONFIG = {
     assinatura.textContent = 'til death do us part';
     identidade.appendChild(assinatura);
 
-    header.appendChild(identidade);
-    header.appendChild(montarNav());
+    inner.appendChild(identidade);
+    inner.appendChild(montarHamburguer(header));
+    inner.appendChild(montarNav());
+    header.appendChild(inner);
 
     const sentinela = document.createElement('div');
     sentinela.className = 'header-sentinela';
@@ -98,6 +145,19 @@ const APP_CONFIG = {
         header.classList.toggle('scrolled', !entradas[0].isIntersecting);
       }, { threshold: 0 });
       observador.observe(sentinela);
+    }
+
+    // O header é sticky e muda de altura (topo cheio vs. compacto ao rolar,
+    // desktop vs. mobile) — guardamos a altura atual numa custom property pra
+    // as seções saberem quanto de scroll-margin-top aplicar e não ficarem
+    // escondidas atrás do header ao navegar por âncora (#festa, #faq etc.).
+    function atualizarAlturaHeader() {
+      document.documentElement.style.setProperty('--header-altura', header.offsetHeight + 'px');
+    }
+    atualizarAlturaHeader();
+    window.addEventListener('resize', atualizarAlturaHeader);
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(atualizarAlturaHeader).observe(header);
     }
   }
 

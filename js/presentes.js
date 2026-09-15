@@ -29,6 +29,8 @@
     'Dar pitaco no vestido da Giu': 'img/vestido-noiva.jpg'
   };
 
+  const VALOR_LIVRE_NOME = 'Patrocinar a lua de mel';
+
   function criarCard(presente) {
     const card = document.createElement('div');
     card.className = 'presente-card';
@@ -62,10 +64,49 @@
     botao.type = 'button';
     botao.className = 'botao-escolher';
     botao.textContent = 'Gerar Pix';
-    botao.addEventListener('click', function () {
-      mostrarQr(presente);
-    });
-    card.appendChild(botao);
+
+    if (presente.nome === VALOR_LIVRE_NOME) {
+      const campoValorLivre = document.createElement('div');
+      campoValorLivre.className = 'valor-livre-campo';
+      campoValorLivre.hidden = true;
+
+      const inputValor = document.createElement('input');
+      inputValor.type = 'number';
+      inputValor.min = '1';
+      inputValor.step = '0.01';
+      inputValor.placeholder = 'Valor em R$';
+      inputValor.className = 'valor-livre-input';
+      inputValor.setAttribute('aria-label', 'Valor em reais para patrocinar a lua de mel');
+
+      const botaoConfirmar = document.createElement('button');
+      botaoConfirmar.type = 'button';
+      botaoConfirmar.className = 'botao-escolher';
+      botaoConfirmar.textContent = 'Confirmar valor';
+      botaoConfirmar.addEventListener('click', function () {
+        const valor = parseFloat(inputValor.value);
+        if (!valor || valor <= 0) {
+          inputValor.focus();
+          return;
+        }
+        mostrarQr({ nome: presente.nome, valor: valor });
+      });
+
+      campoValorLivre.appendChild(inputValor);
+      campoValorLivre.appendChild(botaoConfirmar);
+
+      botao.addEventListener('click', function () {
+        campoValorLivre.hidden = !campoValorLivre.hidden;
+        if (!campoValorLivre.hidden) inputValor.focus();
+      });
+
+      card.appendChild(botao);
+      card.appendChild(campoValorLivre);
+    } else {
+      botao.addEventListener('click', function () {
+        mostrarQr(presente);
+      });
+      card.appendChild(botao);
+    }
 
     return card;
   }

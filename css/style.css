@@ -1,14 +1,21 @@
 :root {
+  /* Tons exatos do guia de marca (guia-de-marca-giovanna-giuliana.html) */
   --cor-base: #0C0908;
   --cor-ouro: #B08D57;
+  --cor-ouro-dim: #8A7047;
   --cor-vinho: #5C1B2E;
   --cor-selo: #6B1620;
   --cor-osso: #F1E7D3;
   --cor-erro: #e0857a;
   --cor-sucesso: #8fc19a;
+  --header-altura: 96px;
 }
 
 * { box-sizing: border-box; }
+
+section {
+  scroll-margin-top: calc(var(--header-altura) + 1rem);
+}
 
 body {
   margin: 0;
@@ -62,15 +69,28 @@ h2 {
 .site-header {
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 20;
+  width: 100%;
   background: var(--cor-vinho);
   margin: 0 -1.5rem;
+}
+
+.header-inner {
+  max-width: 480px;
+  margin: 0 auto;
   padding: 1.2rem 1.5rem;
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.8rem;
   transition: padding 0.25s ease;
+}
+
+@media (min-width: 700px) {
+  .header-inner {
+    max-width: 760px;
+  }
 }
 
 .header-identidade {
@@ -126,7 +146,27 @@ h2 {
   border-bottom: 1px solid var(--cor-osso);
 }
 
-.site-header.scrolled {
+.header-hamburguer {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  width: 28px;
+  height: 22px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.header-hamburguer span {
+  display: block;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--cor-osso);
+}
+
+.site-header.scrolled .header-inner {
   flex-direction: row;
   justify-content: space-between;
   padding: 0.5rem 1.5rem;
@@ -135,6 +175,7 @@ h2 {
 .site-header.scrolled .header-identidade {
   flex-direction: row;
   align-items: baseline;
+  gap: 0.5rem;
 }
 
 .site-header.scrolled .header-logo {
@@ -148,6 +189,60 @@ h2 {
 
 .site-header.scrolled .header-nav {
   flex: 1;
+}
+
+/* ---------- Mobile: menu sanduíche à esquerda, nomes fixos centralizados ---------- */
+
+@media (max-width: 700px) {
+  .header-hamburguer {
+    display: flex;
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .header-inner,
+  .site-header.scrolled .header-inner {
+    flex-direction: row;
+    justify-content: center;
+    padding: 0.7rem 3rem;
+  }
+
+  .header-identidade,
+  .site-header.scrolled .header-identidade {
+    flex-direction: row;
+  }
+
+  .header-data,
+  .header-assinatura,
+  .site-header.scrolled .header-data,
+  .site-header.scrolled .header-assinatura {
+    display: none;
+  }
+
+  .header-logo,
+  .site-header.scrolled .header-logo {
+    font-size: 1.1rem;
+  }
+
+  .header-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 1.2rem;
+    background: var(--cor-vinho);
+    border-top: 1px solid var(--cor-osso);
+  }
+
+  .site-header.menu-aberto .header-nav {
+    display: flex;
+  }
 }
 
 /* ---------- Footer dinâmico (js/app.js injeta o conteúdo em #siteFooter) ---------- */
@@ -186,7 +281,7 @@ h2 {
 }
 
 details {
-  border-bottom: 1px solid var(--cor-vinho);
+  border-bottom: 1px solid var(--cor-ouro-dim);
   padding: 0.6rem 0;
 }
 
@@ -351,6 +446,24 @@ button[type="submit"]:disabled {
   letter-spacing: 0.05em;
   font-size: 0.85rem;
   cursor: pointer;
+}
+
+.valor-livre-campo {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.valor-livre-input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--cor-vinho);
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  background: #fff;
+  color: var(--cor-base);
 }
 
 /* ---------- Popup do QR Pix ---------- */
