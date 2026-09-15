@@ -1,16 +1,23 @@
-// Web App único: doGet devolve a lista de convidados, doPost grava um RSVP.
+// Web App único: doGet devolve convidados + presentes, doPost grava RSVP ou log de presente escolhido.
 // Deploy: Extensões > Apps Script na planilha, colar este arquivo, "Implantar" > "Nova implantação" > tipo "App da Web".
 
 const SHEET_CONVIDADOS = 'Convidados';
 const SHEET_RSVPS = 'RSVPs';
+const SHEET_PRESENTES_ESCOLHIDOS = 'PresentesEscolhidos';
 
 function doGet(e) {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_CONVIDADOS);
   const values = sheet.getDataRange().getValues();
-  const nomes = values.slice(1).map(function (row) { return row[0]; }).filter(String);
+  const linhas = values.slice(1);
+
+  const nomes = linhas.map(function (row) { return row[0]; }).filter(String);
+
+  const presentes = linhas
+    .map(function (row) { return { nome: row[2], valor: row[3] }; })
+    .filter(function (p) { return p.nome && p.valor; });
 
   return ContentService
-    .createTextOutput(JSON.stringify({ nomes: nomes }))
+    .createTextOutput(JSON.stringify({ nomes: nomes, presentes: presentes }))
     .setMimeType(ContentService.MimeType.JSON);
 }
 
@@ -22,6 +29,14 @@ function doPost(e) {
     return jsonError('JSON inválido no corpo da requisição.');
   }
 
+  if (body.tipo === 'presente') {
+    return gravarPresenteEscolhido(body);
+  }
+
+  return gravarRsvp(body);
+}
+
+function gravarRsvp(body) {
   if (!body.nome) {
     return jsonError('Campo "nome" é obrigatório.');
   }
@@ -35,6 +50,24 @@ function doPost(e) {
     body.nomesAcompanhantes || '',
     body.churrasco ? 'Sim' : 'Não',
     body.bebida ? 'Sim' : 'Não'
+  ]);
+
+  return ContentService
+    .createTextOutput(JSON.stringify({ ok: true }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function gravarPresenteEscolhido(body) {
+  if (!body.presente) {
+    return jsonError('Campo "presente" é obrigatório.');
+  }
+
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_PRESENTES_ESCOLHIDOS);
+  sheet.appendRow([
+    new Date(),
+    body.presente,
+    body.valor || '',
+    body.nomeDeQuemEscolheu || ''
   ]);
 
   return ContentService

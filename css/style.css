@@ -153,4 +153,80 @@ button[type="submit"]:disabled {
   border-radius: 4px;
 }
 
+.lista-presentes {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.presente-card {
+  border: 1px solid var(--cor-vinho);
+  border-radius: 6px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.imagem-placeholder {
+  aspect-ratio: 4 / 3;
+  border: 1px dashed var(--cor-vinho);
+  border-radius: 4px;
+  margin-bottom: 0.8rem;
+}
+
+.presente-nome {
+  margin: 0 0 0.3rem;
+  font-family: "Cormorant SC", serif;
+  color: var(--cor-ouro);
+}
+
+.presente-valor {
+  margin: 0 0 0.8rem;
+  font-weight: 600;
+}
+
+.botao-escolher {
+  width: 100%;
+  padding: 0.6rem;
+  background: transparent;
+  color: var(--cor-ouro);
+  border: 1px solid var(--cor-ouro);
+  border-radius: 4px;
+  font-family: "Cormorant SC", serif;
+  font-variant: small-caps;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+}
+
+.qr-area {
+  border: 1px solid var(--cor-ouro);
+  border-radius: 6px;
+  padding: 1.2rem;
+  margin: 1.5rem 0;
+  text-align: center;
+}
+
+.qr-descricao {
+  margin-top: 0;
+  font-weight: 600;
+}
+
+#qrCanvas {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+  background: #fff;
+  padding: 0.8rem;
+  border-radius: 4px;
+}
+
+.botao-fechar {
+  background: none;
+  border: none;
+  color: var(--cor-osso);
+  text-decoration: underline;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
 [hidden] { display: none !important; }
