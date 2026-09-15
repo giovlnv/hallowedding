@@ -8,12 +8,17 @@ const SHEET_PRESENTES_ESCOLHIDOS = 'PresentesEscolhidos';
 function doGet(e) {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_CONVIDADOS);
   const values = sheet.getDataRange().getValues();
+  const cabecalho = values[0];
   const linhas = values.slice(1);
 
-  const nomes = linhas.map(function (row) { return row[0]; }).filter(String);
+  const colNome = cabecalho.indexOf('Nome');
+  const colPresente = cabecalho.indexOf('Presentes');
+  const colValor = cabecalho.indexOf('Valor');
+
+  const nomes = linhas.map(function (row) { return row[colNome]; }).filter(String);
 
   const presentes = linhas
-    .map(function (row) { return { nome: row[2], valor: row[3] }; })
+    .map(function (row) { return { nome: row[colPresente], valor: row[colValor] }; })
     .filter(function (p) { return p.nome && p.valor; });
 
   return ContentService
