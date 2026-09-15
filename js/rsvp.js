@@ -7,18 +7,30 @@
   const mensagemErro = document.getElementById('mensagemErro');
   const confirmacao = document.getElementById('confirmacao');
 
+  let nomesConvidados = [];
+
   fetch(APP_CONFIG.EXEC_URL)
     .then(function (res) { return res.json(); })
     .then(function (data) {
-      (data.nomes || []).forEach(function (nome) {
+      nomesConvidados = data.nomes || [];
+      nomesConvidados.forEach(function (nome) {
         const option = document.createElement('option');
         option.value = nome;
         listaConvidados.appendChild(option);
       });
     })
     .catch(function () {
-      // autocomplete é só uma ajuda; se falhar, o campo de nome continua livre
+      // autocomplete é só uma ajuda; se a lista não carregar, a validação abaixo
+      // vai barrar o envio até a página ser recarregada com sucesso
     });
+
+  function nomeValido(valor) {
+    const alvo = valor.trim().toLowerCase();
+    if (!alvo) return false;
+    return nomesConvidados.some(function (nome) {
+      return nome.trim().toLowerCase() === alvo;
+    });
+  }
 
   function renderAcompanhantes(qtd) {
     acompanhantesContainer.innerHTML = '';
@@ -34,6 +46,8 @@
       input.type = 'text';
       input.id = 'acompanhante' + i;
       input.className = 'acompanhante-input';
+      input.setAttribute('list', 'listaConvidados');
+      input.autocomplete = 'off';
       input.required = true;
 
       campo.appendChild(label);
@@ -51,18 +65,41 @@
     event.preventDefault();
     mensagemErro.hidden = true;
 
-    const nomesAcompanhantes = Array.from(document.querySelectorAll('.acompanhante-input'))
+    const nomeInput = document.getElementById('nome');
+    const acompanhanteInputs = Array.from(document.querySelectorAll('.acompanhante-input'));
+
+    if (!nomesConvidados.length) {
+      mensagemErro.textContent = 'A lista de convidados ainda não carregou. Recarregue a página e tente de novo.';
+      mensagemErro.hidden = false;
+      return;
+    }
+
+    if (!nomeValido(nomeInput.value)) {
+      mensagemErro.textContent = 'Não encontramos esse nome na lista de convidados. Escolha um nome da lista.';
+      mensagemErro.hidden = false;
+      nomeInput.focus();
+      return;
+    }
+
+    const acompanhanteInvalido = acompanhanteInputs.find(function (input) {
+      return !nomeValido(input.value);
+    });
+    if (acompanhanteInvalido) {
+      mensagemErro.textContent = 'Um dos acompanhantes não está na lista de convidados. Escolha um nome da lista para cada acompanhante.';
+      mensagemErro.hidden = false;
+      acompanhanteInvalido.focus();
+      return;
+    }
+
+    const nomesAcompanhantes = acompanhanteInputs
       .map(function (input) { return input.value.trim(); })
-      .filter(Boolean)
       .join(', ');
 
     const payload = {
-      nome: document.getElementById('nome').value.trim(),
+      nome: nomeInput.value.trim(),
       telefone: document.getElementById('telefone').value.trim(),
       qtdAcompanhantes: parseInt(qtdInput.value, 10) || 0,
-      nomesAcompanhantes: nomesAcompanhantes,
-      churrasco: form.querySelector('input[name="churrasco"]:checked').value === 'sim',
-      bebida: form.querySelector('input[name="bebida"]:checked').value === 'sim'
+      nomesAcompanhantes: nomesAcompanhantes
     };
 
     botaoEnviar.disabled = true;

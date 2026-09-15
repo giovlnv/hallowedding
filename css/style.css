@@ -20,19 +20,19 @@ body {
   line-height: 1.6;
 }
 
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background: var(--cor-osso);
-  margin: 0 -1.5rem;
-  padding: 0.8rem 1.5rem;
-  border-bottom: 1px solid var(--cor-vinho);
-}
-
 main {
   max-width: 480px;
   margin: 0 auto;
+}
+
+.pagina-presentes {
+  max-width: 480px;
+}
+
+@media (min-width: 700px) {
+  .pagina-presentes {
+    max-width: 760px;
+  }
 }
 
 h1 {
@@ -45,45 +45,6 @@ h1 {
   margin-bottom: 1.5rem;
 }
 
-nav {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.4rem 1.1rem;
-}
-
-nav a {
-  font-family: "Cormorant SC", serif;
-  font-variant: small-caps;
-  letter-spacing: 0.05em;
-  color: var(--cor-vinho);
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.hero {
-  text-align: center;
-  padding: 1.5rem 0 0.5rem;
-}
-
-.hero h1 {
-  margin-bottom: 0.5rem;
-}
-
-.data-casamento {
-  font-family: "Cormorant SC", serif;
-  letter-spacing: 0.15em;
-  color: var(--cor-base);
-  margin: 0;
-}
-
-.assinatura {
-  font-family: "Pinyon Script", cursive;
-  font-size: 1.6rem;
-  color: var(--cor-vinho);
-  margin: 0.5rem 0 0;
-}
-
 h2 {
   font-family: "Cormorant SC", "Cormorant Garamond", serif;
   font-size: 1.4rem;
@@ -92,15 +53,129 @@ h2 {
   margin-bottom: 1rem;
 }
 
-footer {
-  text-align: center;
-  padding: 1.5rem 0 0.5rem;
+/* ---------- Header dinâmico (js/app.js injeta o conteúdo em #siteHeader) ---------- */
+
+.header-sentinela {
+  height: 1px;
 }
 
-footer .data-footer {
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--cor-vinho);
+  margin: 0 -1.5rem;
+  padding: 1.2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  transition: padding 0.25s ease;
+}
+
+.header-identidade {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.header-logo {
+  font-family: "Cormorant SC", serif;
+  font-weight: 600;
+  font-size: 1.5rem;
+  letter-spacing: 0.03em;
+  color: var(--cor-osso);
+  text-decoration: none;
+  transition: font-size 0.25s ease;
+}
+
+.header-data {
+  font-family: "Cormorant SC", serif;
+  letter-spacing: 0.15em;
+  color: var(--cor-osso);
+  font-size: 0.85rem;
+  margin: 0.2rem 0 0;
+}
+
+.header-assinatura {
+  font-family: "Pinyon Script", cursive;
+  font-size: 1.2rem;
+  color: var(--cor-osso);
+  margin: 0.2rem 0 0;
+}
+
+.header-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem 1.1rem;
+}
+
+.header-nav a {
+  font-family: "Cormorant SC", serif;
+  font-variant: small-caps;
+  letter-spacing: 0.05em;
+  color: var(--cor-osso);
+  text-decoration: none;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.header-nav a[aria-current="page"] {
+  border-bottom: 1px solid var(--cor-osso);
+}
+
+.site-header.scrolled {
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.5rem 1.5rem;
+}
+
+.site-header.scrolled .header-identidade {
+  flex-direction: row;
+  align-items: baseline;
+}
+
+.site-header.scrolled .header-logo {
+  font-size: 1.05rem;
+}
+
+.site-header.scrolled .header-data,
+.site-header.scrolled .header-assinatura {
+  display: none;
+}
+
+.site-header.scrolled .header-nav {
+  flex: 1;
+}
+
+/* ---------- Footer dinâmico (js/app.js injeta o conteúdo em #siteFooter) ---------- */
+
+.site-footer {
+  text-align: center;
+  background: var(--cor-vinho);
+  margin: 2rem -1.5rem -1.5rem;
+  padding: 1.5rem;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.site-footer.visivel {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.site-footer .assinatura {
+  color: var(--cor-osso);
+  margin: 0;
+}
+
+.site-footer .data-footer {
   font-family: "Cormorant SC", serif;
   letter-spacing: 0.1em;
-  color: var(--cor-base);
+  color: var(--cor-osso);
   margin: 0.3rem 0 0;
 }
 
@@ -154,19 +229,8 @@ input[type="number"] {
   color: var(--cor-base);
 }
 
-.opcoes-sim-nao {
-  display: flex;
-  gap: 1.5rem;
-}
-
-.opcoes-sim-nao label {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-family: inherit;
-  font-variant: normal;
-  font-weight: 400;
-  color: var(--cor-base);
+input:invalid[data-tocado="true"] {
+  border-color: var(--cor-erro);
 }
 
 #acompanhantesContainer .campo {
@@ -223,16 +287,6 @@ button[type="submit"]:disabled {
   aspect-ratio: 4 / 3;
   border: 1px solid var(--cor-vinho);
   border-radius: 4px;
-}
-
-.pagina-presentes {
-  max-width: 480px;
-}
-
-@media (min-width: 700px) {
-  .pagina-presentes {
-    max-width: 760px;
-  }
 }
 
 .lista-presentes {
@@ -299,12 +353,21 @@ button[type="submit"]:disabled {
   cursor: pointer;
 }
 
-.qr-area {
+/* ---------- Popup do QR Pix ---------- */
+
+.qr-dialog {
   border: 1px solid var(--cor-ouro);
   border-radius: 6px;
-  padding: 1.2rem;
-  margin: 1.5rem 0;
+  padding: 1.5rem;
+  max-width: 320px;
+  width: 90vw;
   text-align: center;
+  background: var(--cor-osso);
+  color: var(--cor-base);
+}
+
+.qr-dialog::backdrop {
+  background: rgba(12, 9, 8, 0.7);
 }
 
 .qr-descricao {
@@ -321,6 +384,44 @@ button[type="submit"]:disabled {
   border-radius: 4px;
 }
 
+.pix-copia-cola {
+  display: block;
+  width: 100%;
+  max-height: 4.5rem;
+  overflow-y: auto;
+  word-break: break-all;
+  font-family: "Space Mono", monospace;
+  font-size: 0.7rem;
+  background: #fff;
+  border: 1px solid var(--cor-vinho);
+  border-radius: 4px;
+  padding: 0.5rem;
+  margin-bottom: 0.8rem;
+  text-align: left;
+}
+
+.botao-copiar {
+  width: 100%;
+  padding: 0.6rem;
+  background: var(--cor-ouro);
+  color: var(--cor-base);
+  border: none;
+  border-radius: 4px;
+  font-family: "Cormorant SC", serif;
+  font-variant: small-caps;
+  letter-spacing: 0.05em;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 0.6rem;
+}
+
+.mensagem-copiado {
+  font-size: 0.85rem;
+  color: var(--cor-sucesso);
+  min-height: 1.2em;
+}
+
 .botao-fechar {
   background: none;
   border: none;
@@ -332,3 +433,9 @@ button[type="submit"]:disabled {
 }
 
 [hidden] { display: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header, .header-logo, .site-footer {
+    transition: none;
+  }
+}

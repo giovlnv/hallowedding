@@ -28,7 +28,7 @@ Duas sugestões sobre a implementação:
 ## Estrutura de dados (Google Sheets — uma planilha, 3 abas)
 
 1. **Convidados** — lista que você pré-carrega: `Nome`
-2. **RSVPs** — respostas do formulário: `Timestamp, Nome, Telefone, QtdAcompanhantes, NomesAcompanhantes, Churrasco, Bebida`
+2. **RSVPs** — respostas do formulário: `Timestamp, Nome, Telefone, QtdAcompanhantes, NomesAcompanhantes` (sem Churrasco/Bebida — perguntas removidas na Fase 6)
 3. **PresentesEscolhidos** — log opcional, não trava nada: `Timestamp, Presente, Valor` (sem coluna de quem escolheu — não é necessário registrar isso, e pode haver presente escolhido sem RSVP preenchido na mesma sessão)
 
 ## Estrutura do site (repositório GitHub Pages)

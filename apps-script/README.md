@@ -5,8 +5,8 @@
 Pronta: [Casamento - RSVP e Convidados](https://docs.google.com/spreadsheets/d/1JfeTdoMXUlDjca5QzalbdbN87l4eL9mOq-J-h9qdKow/edit) — já criada com as 3 abas e cabeçalhos, e a aba **Convidados** já preenchida com os nomes de `convidados.txt`.
 
 - **Convidados**: `Nome`
-- **RSVPs**: `Timestamp | Nome | Telefone | QtdAcompanhantes | NomesAcompanhantes | Churrasco | Bebida`
-- **PresentesEscolhidos**: `Timestamp | Presente | Valor | NomeDeQuemEscolheu` (usada só na Fase 4, por enquanto só o cabeçalho)
+- **RSVPs**: `Timestamp | Nome | Telefone | QtdAcompanhantes | NomesAcompanhantes`
+- **PresentesEscolhidos**: `Timestamp | Presente | Valor`
 
 Preencha a aba **Convidados** com a lista de nomes (um por linha, coluna A).
 
@@ -32,7 +32,7 @@ curl "https://script.google.com/macros/s/SEU_ID/exec"
 # doPost — deve devolver {"ok": true} e criar uma linha em RSVPs
 curl -X POST "https://script.google.com/macros/s/SEU_ID/exec" \
   -H "Content-Type: text/plain;charset=utf-8" \
-  -d '{"nome":"Teste","telefone":"11999999999","qtdAcompanhantes":1,"nomesAcompanhantes":"Fulano","churrasco":true,"bebida":true}'
+  -d '{"nome":"Teste","telefone":"DDD+numero","qtdAcompanhantes":1,"nomesAcompanhantes":"Fulano"}'
 ```
 
 Confira na aba **RSVPs** se a linha apareceu certa.

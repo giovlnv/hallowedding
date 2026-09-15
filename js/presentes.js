@@ -1,10 +1,15 @@
 (function () {
   const lista = document.getElementById('listaPresentes');
   const mensagemErro = document.getElementById('mensagemErro');
-  const qrArea = document.getElementById('qrArea');
+  const qrDialog = document.getElementById('qrDialog');
   const qrDescricao = document.getElementById('qrDescricao');
   const qrCanvas = document.getElementById('qrCanvas');
+  const pixCopiaCola = document.getElementById('pixCopiaCola');
+  const copiarPix = document.getElementById('copiarPix');
+  const mensagemCopiado = document.getElementById('mensagemCopiado');
   const fecharQr = document.getElementById('fecharQr');
+
+  let payloadAtual = '';
 
   function formatarReais(valor) {
     return Number(valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -39,6 +44,7 @@
     } else {
       imagem = document.createElement('div');
       imagem.className = 'imagem-placeholder';
+      imagem.setAttribute('aria-hidden', 'true');
     }
     card.appendChild(imagem);
 
@@ -55,7 +61,7 @@
     const botao = document.createElement('button');
     botao.type = 'button';
     botao.className = 'botao-escolher';
-    botao.textContent = 'Escolher';
+    botao.textContent = 'Gerar Pix';
     botao.addEventListener('click', function () {
       mostrarQr(presente);
     });
@@ -71,19 +77,25 @@
       return;
     }
     mensagemErro.hidden = true;
+    mensagemCopiado.textContent = '';
 
-    const payload = gerarPixPayload(presente.valor, presente.nome);
+    payloadAtual = gerarPixPayload(presente.valor, presente.nome);
 
     qrCanvas.innerHTML = '';
     new QRCode(qrCanvas, {
-      text: payload,
+      text: payloadAtual,
       width: 220,
       height: 220
     });
 
     qrDescricao.textContent = presente.nome + ' — ' + formatarReais(presente.valor);
-    qrArea.hidden = false;
-    qrArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    pixCopiaCola.textContent = payloadAtual;
+
+    if (typeof qrDialog.showModal === 'function') {
+      qrDialog.showModal();
+    } else {
+      qrDialog.setAttribute('open', '');
+    }
 
     fetch(APP_CONFIG.EXEC_URL, {
       method: 'POST',
@@ -94,8 +106,25 @@
     });
   }
 
-  fecharQr.addEventListener('click', function () {
-    qrArea.hidden = true;
+  function fecharDialog() {
+    if (typeof qrDialog.close === 'function') {
+      qrDialog.close();
+    } else {
+      qrDialog.removeAttribute('open');
+    }
+  }
+
+  fecharQr.addEventListener('click', fecharDialog);
+
+  copiarPix.addEventListener('click', function () {
+    if (!payloadAtual) return;
+    navigator.clipboard.writeText(payloadAtual)
+      .then(function () {
+        mensagemCopiado.textContent = 'Código copiado!';
+      })
+      .catch(function () {
+        mensagemCopiado.textContent = 'Não foi possível copiar automaticamente — selecione o código acima manualmente.';
+      });
   });
 
   fetch(APP_CONFIG.EXEC_URL)

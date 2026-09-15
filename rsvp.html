@@ -8,16 +8,16 @@
 </head>
 <body>
   <main>
-    <header class="site-header">
-      <nav><a href="index.html">&larr; Início</a></nav>
-    </header>
+    <div id="siteHeader"></div>
+
     <h1>Confirme sua presença</h1>
 
-    <form id="formRsvp">
+    <form id="formRsvp" novalidate>
       <div class="campo">
         <label for="nome">Seu nome</label>
-        <input type="text" id="nome" name="nome" list="listaConvidados" autocomplete="off" required>
+        <input type="text" id="nome" name="nome" list="listaConvidados" autocomplete="off" aria-describedby="ajudaNome" required>
         <datalist id="listaConvidados"></datalist>
+        <p id="ajudaNome" class="a-preencher" style="font-size:0.85rem;">Escolha seu nome exatamente como aparece na lista de convidados.</p>
       </div>
 
       <div class="campo">
@@ -32,34 +32,15 @@
 
       <div id="acompanhantesContainer"></div>
 
-      <div class="campo">
-        <label>Vai querer churrasco?</label>
-        <div class="opcoes-sim-nao">
-          <label><input type="radio" name="churrasco" value="sim" required> Sim</label>
-          <label><input type="radio" name="churrasco" value="nao"> Não</label>
-        </div>
-      </div>
-
-      <div class="campo">
-        <label>Vai querer bebida?</label>
-        <div class="opcoes-sim-nao">
-          <label><input type="radio" name="bebida" value="sim" required> Sim</label>
-          <label><input type="radio" name="bebida" value="nao"> Não</label>
-        </div>
-      </div>
-
       <button type="submit" id="botaoEnviar">Confirmar presença</button>
-      <p id="mensagemErro" class="mensagem-erro" hidden></p>
+      <p id="mensagemErro" class="mensagem-erro" role="alert" hidden></p>
     </form>
 
     <div id="confirmacao" hidden>
       <p class="mensagem-sucesso">Presença confirmada! Obrigado 💛</p>
     </div>
 
-    <footer>
-      <p class="assinatura">Giovanna &amp; Giuliana</p>
-      <p class="data-footer">31 · 10 · 2026</p>
-    </footer>
+    <div id="siteFooter"></div>
   </main>
 
   <script src="js/app.js"></script>

@@ -52,9 +52,7 @@ function gravarRsvp(body) {
     body.nome,
     body.telefone || '',
     body.qtdAcompanhantes || 0,
-    body.nomesAcompanhantes || '',
-    body.churrasco ? 'Sim' : 'Não',
-    body.bebida ? 'Sim' : 'Não'
+    body.nomesAcompanhantes || ''
   ]);
 
   return ContentService
