@@ -12,12 +12,22 @@
 
 body {
   margin: 0;
-  padding: 1.5rem;
-  background: var(--cor-base);
-  color: var(--cor-osso);
+  padding: 0 1.5rem 1.5rem;
+  background: var(--cor-osso);
+  color: var(--cor-base);
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: 1.1rem;
   line-height: 1.6;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--cor-osso);
+  margin: 0 -1.5rem;
+  padding: 0.8rem 1.5rem;
+  border-bottom: 1px solid var(--cor-vinho);
 }
 
 main {
@@ -31,7 +41,7 @@ h1 {
   font-weight: 600;
   letter-spacing: 0.03em;
   text-align: center;
-  color: var(--cor-ouro);
+  color: var(--cor-vinho);
   margin-bottom: 1.5rem;
 }
 
@@ -40,21 +50,20 @@ nav {
   flex-wrap: wrap;
   justify-content: center;
   gap: 0.4rem 1.1rem;
-  margin-bottom: 1.5rem;
 }
 
 nav a {
   font-family: "Cormorant SC", serif;
   font-variant: small-caps;
   letter-spacing: 0.05em;
-  color: var(--cor-ouro);
+  color: var(--cor-vinho);
   text-decoration: none;
   font-weight: 600;
 }
 
 .hero {
   text-align: center;
-  padding: 1rem 0 0.5rem;
+  padding: 1.5rem 0 0.5rem;
 }
 
 .hero h1 {
@@ -64,28 +73,40 @@ nav a {
 .data-casamento {
   font-family: "Cormorant SC", serif;
   letter-spacing: 0.15em;
-  color: var(--cor-osso);
+  color: var(--cor-base);
   margin: 0;
 }
 
 .assinatura {
   font-family: "Pinyon Script", cursive;
   font-size: 1.6rem;
-  color: var(--cor-ouro);
+  color: var(--cor-vinho);
   margin: 0.5rem 0 0;
 }
 
 h2 {
   font-family: "Cormorant SC", "Cormorant Garamond", serif;
   font-size: 1.4rem;
-  color: var(--cor-ouro);
+  color: var(--cor-vinho);
   text-align: center;
   margin-bottom: 1rem;
 }
 
+footer {
+  text-align: center;
+  padding: 1.5rem 0 0.5rem;
+}
+
+footer .data-footer {
+  font-family: "Cormorant SC", serif;
+  letter-spacing: 0.1em;
+  color: var(--cor-base);
+  margin: 0.3rem 0 0;
+}
+
 .a-preencher {
-  color: var(--cor-osso);
-  opacity: 0.6;
+  color: var(--cor-base);
+  opacity: 0.55;
   font-style: italic;
 }
 
@@ -98,11 +119,6 @@ summary {
   font-family: "Cormorant SC", serif;
   font-weight: 600;
   cursor: pointer;
-}
-
-footer {
-  text-align: center;
-  padding: 1rem 0 0.5rem;
 }
 
 hr, .divisor {
@@ -122,7 +138,7 @@ label {
   letter-spacing: 0.04em;
   margin-bottom: 0.4rem;
   font-weight: 600;
-  color: var(--cor-ouro);
+  color: var(--cor-vinho);
 }
 
 input[type="text"],
@@ -134,8 +150,8 @@ input[type="number"] {
   border-radius: 4px;
   font-family: inherit;
   font-size: 1rem;
-  background: #16110f;
-  color: var(--cor-osso);
+  background: #fff;
+  color: var(--cor-base);
 }
 
 .opcoes-sim-nao {
@@ -150,7 +166,7 @@ input[type="number"] {
   font-family: inherit;
   font-variant: normal;
   font-weight: 400;
-  color: var(--cor-osso);
+  color: var(--cor-base);
 }
 
 #acompanhantesContainer .campo {
@@ -185,7 +201,7 @@ button[type="submit"]:disabled {
 .mensagem-sucesso {
   font-family: "Pinyon Script", cursive;
   font-size: 1.6rem;
-  color: var(--cor-ouro);
+  color: var(--cor-vinho);
   text-align: center;
 }
 
@@ -198,7 +214,7 @@ button[type="submit"]:disabled {
 .aviso {
   border-left: 2px solid var(--cor-selo);
   padding-left: 0.8rem;
-  color: var(--cor-osso);
+  color: var(--cor-base);
   font-style: italic;
 }
 
@@ -251,7 +267,7 @@ button[type="submit"]:disabled {
   margin: 0 0 0.2rem;
   font-family: "Cormorant SC", serif;
   font-size: 0.95rem;
-  color: var(--cor-ouro);
+  color: var(--cor-vinho);
 }
 
 .presente-valor {
@@ -264,8 +280,8 @@ button[type="submit"]:disabled {
   width: 100%;
   padding: 0.4rem;
   background: transparent;
-  color: var(--cor-ouro);
-  border: 1px solid var(--cor-ouro);
+  color: var(--cor-vinho);
+  border: 1px solid var(--cor-vinho);
   border-radius: 4px;
   font-family: "Cormorant SC", serif;
   font-variant: small-caps;
@@ -299,7 +315,7 @@ button[type="submit"]:disabled {
 .botao-fechar {
   background: none;
   border: none;
-  color: var(--cor-osso);
+  color: var(--cor-vinho);
   text-decoration: underline;
   cursor: pointer;
   font-family: inherit;
