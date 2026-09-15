@@ -55,6 +55,33 @@
     nome.textContent = presente.nome;
     card.appendChild(nome);
 
+    if (presente.nome === VALOR_LIVRE_NOME) {
+      const inputValor = document.createElement('input');
+      inputValor.type = 'text';
+      inputValor.inputMode = 'decimal';
+      inputValor.placeholder = 'Valor em R$';
+      inputValor.className = 'valor-livre-input';
+      inputValor.setAttribute('aria-label', 'Valor em reais para patrocinar a lua de mel');
+      card.appendChild(inputValor);
+
+      const botao = document.createElement('button');
+      botao.type = 'button';
+      botao.className = 'botao-escolher valor-livre-botao';
+      botao.textContent = 'Gerar Pix';
+      botao.addEventListener('click', function () {
+        // Aceita vírgula ou ponto como separador decimal (ex.: "150,50").
+        const valor = parseFloat(inputValor.value.trim().replace(',', '.'));
+        if (!valor || valor <= 0) {
+          inputValor.focus();
+          return;
+        }
+        mostrarQr({ nome: presente.nome, valor: valor });
+      });
+      card.appendChild(botao);
+
+      return card;
+    }
+
     const valor = document.createElement('p');
     valor.className = 'presente-valor';
     valor.textContent = formatarReais(presente.valor);
@@ -64,49 +91,10 @@
     botao.type = 'button';
     botao.className = 'botao-escolher';
     botao.textContent = 'Gerar Pix';
-
-    if (presente.nome === VALOR_LIVRE_NOME) {
-      const campoValorLivre = document.createElement('div');
-      campoValorLivre.className = 'valor-livre-campo';
-      campoValorLivre.hidden = true;
-
-      const inputValor = document.createElement('input');
-      inputValor.type = 'number';
-      inputValor.min = '1';
-      inputValor.step = '0.01';
-      inputValor.placeholder = 'Valor em R$';
-      inputValor.className = 'valor-livre-input';
-      inputValor.setAttribute('aria-label', 'Valor em reais para patrocinar a lua de mel');
-
-      const botaoConfirmar = document.createElement('button');
-      botaoConfirmar.type = 'button';
-      botaoConfirmar.className = 'botao-escolher';
-      botaoConfirmar.textContent = 'Confirmar valor';
-      botaoConfirmar.addEventListener('click', function () {
-        const valor = parseFloat(inputValor.value);
-        if (!valor || valor <= 0) {
-          inputValor.focus();
-          return;
-        }
-        mostrarQr({ nome: presente.nome, valor: valor });
-      });
-
-      campoValorLivre.appendChild(inputValor);
-      campoValorLivre.appendChild(botaoConfirmar);
-
-      botao.addEventListener('click', function () {
-        campoValorLivre.hidden = !campoValorLivre.hidden;
-        if (!campoValorLivre.hidden) inputValor.focus();
-      });
-
-      card.appendChild(botao);
-      card.appendChild(campoValorLivre);
-    } else {
-      botao.addEventListener('click', function () {
-        mostrarQr(presente);
-      });
-      card.appendChild(botao);
-    }
+    botao.addEventListener('click', function () {
+      mostrarQr(presente);
+    });
+    card.appendChild(botao);
 
     return card;
   }
@@ -172,6 +160,8 @@
     .then(function (res) { return res.json(); })
     .then(function (data) {
       const presentes = (data.presentes || []).slice().sort(function (a, b) {
+        if (a.nome === VALOR_LIVRE_NOME) return 1;
+        if (b.nome === VALOR_LIVRE_NOME) return -1;
         return Number(a.valor) - Number(b.valor);
       });
       presentes.forEach(function (presente) {
