@@ -1,12 +1,12 @@
 # Apps Script — deploy e teste
 
-## 1. Criar a planilha
+## 1. Planilha
 
-Google Sheets com 3 abas e cabeçalhos na linha 1:
+Pronta: [Casamento - RSVP e Convidados](https://docs.google.com/spreadsheets/d/1JfeTdoMXUlDjca5QzalbdbN87l4eL9mOq-J-h9qdKow/edit) — já criada com as 3 abas e cabeçalhos, e a aba **Convidados** já preenchida com os nomes de `convidados.txt`.
 
 - **Convidados**: `Nome`
 - **RSVPs**: `Timestamp | Nome | Telefone | QtdAcompanhantes | NomesAcompanhantes | Churrasco | Bebida`
-- **PresentesEscolhidos**: `Timestamp | Presente | Valor | NomeDeQuemEscolheu` (usada só na Fase 4, pode deixar vazia por enquanto)
+- **PresentesEscolhidos**: `Timestamp | Presente | Valor | NomeDeQuemEscolheu` (usada só na Fase 4, por enquanto só o cabeçalho)
 
 Preencha a aba **Convidados** com a lista de nomes (um por linha, coluna A).
 
