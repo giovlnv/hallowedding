@@ -6,6 +6,7 @@
 - **Backend:** Google Apps Script (Web App) lendo/escrevendo numa Google Sheets
 - **Mapa:** iframe do Google Maps via "Compartilhar → Incorporar mapa" (sem API key, sem cartão)
 - **QR Pix:** gerado 100% no navegador em JavaScript, sem backend
+- **Chave Pix:** chave aleatória do Mercado Pago/Mercado Livre (`79019b12-b967-4660-afdc-734b70d0ee7f`), não a caixinha do Itaú — ver decisão em [Decisões tomadas](#decisões-tomadas)
 
 ## Minha opinião sobre as escolhas
 
@@ -14,7 +15,11 @@ GitHub Pages + Apps Script é uma combinação sólida e bem testada para esse t
 Duas sugestões sobre a implementação:
 
 1. Em vez de publicar a planilha de convidados na web (Arquivo → Publicar na web) para o autocomplete do RSVP, prefiro que a leitura da lista de nomes também passe pelo mesmo Apps Script Web App (um `doGet`), junto com a gravação do RSVP (`doPost`). Fica só uma URL para gerenciar, e a planilha em si nunca fica com um link público indexável.
-2. Como a chave é aleatória e aponta para a caixinha do Itaú: confirme antes se essa caixinha já tem uma chave Pix própria (o app do Itaú geralmente gera uma ao criar a caixinha) ou se você vai usar uma chave sua e transferir depois — isso muda qual chave entra no QR. Também recomendo testar com um Pix de valor baixo (R$0,01–R$1) antes de divulgar: o campo de mensagem ("informação adicional" do BR Code) sempre aparece no extrato de quem recebe, mas nem todo app de banco mostra esse campo com destaque na tela de confirmação de quem paga — bom saber disso com antecedência.
+2. Como a chave é aleatória: confirme antes se ela já está de fato vinculada à conta/caixinha certa ou se você vai usar uma chave e transferir depois — isso muda qual chave entra no QR. Também recomendo testar com um Pix de valor baixo (R$0,01–R$1) antes de divulgar: o campo de mensagem ("informação adicional" do BR Code) sempre aparece no extrato de quem recebe, mas nem todo app de banco mostra esse campo com destaque na tela de confirmação de quem paga — bom saber disso com antecedência.
+
+## Decisões tomadas
+
+**2026-09-14 — Chave Pix: Mercado Pago, não Itaú.** A ideia inicial era usar a caixinha do Itaú, mas a chave aleatória que o app do Itaú gera para a caixinha ficou vinculada ao CPF da conta, não a uma chave EVP própria (confirmado ao decodificar dois BR Codes de teste gerados por lá — o campo de chave sempre voltava com 11 dígitos numéricos, formato de CPF). Optou-se por usar a chave aleatória do Mercado Pago/Mercado Livre (`79019b12-b967-4660-afdc-734b70d0ee7f`, formato EVP válido) para o QR de presentes. Isso não muda a arquitetura (Fase 4 continua igual), só o valor da constante `CHAVE_PIX` em `js/pix.js` quando essa fase for implementada.
 
 ## Estrutura de dados (Google Sheets — uma planilha, 3 abas)
 
