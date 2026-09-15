@@ -13,7 +13,7 @@ function doGet(e) {
 
   const colNome = cabecalho.indexOf('Nome');
   const colPresente = cabecalho.indexOf('Presentes');
-  const colValor = cabecalho.indexOf('Valor');
+  const colValor = cabecalho.indexOf('Preço');
 
   const nomes = linhas.map(function (row) { return row[colNome]; }).filter(String);
 
