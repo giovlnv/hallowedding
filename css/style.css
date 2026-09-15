@@ -84,7 +84,7 @@ h2 {
   flex-direction: column;
   align-items: center;
   gap: 0.8rem;
-  transition: padding 0.25s ease;
+  transition: padding 0.3s ease, gap 0.3s ease, max-width 0.3s ease;
 }
 
 @media (min-width: 700px) {
@@ -116,6 +116,10 @@ h2 {
   color: var(--cor-osso);
   font-size: 0.85rem;
   margin: 0.2rem 0 0;
+  max-height: 2rem;
+  opacity: 1;
+  overflow: hidden;
+  transition: opacity 0.25s ease, max-height 0.25s ease, margin 0.25s ease;
 }
 
 .header-assinatura {
@@ -123,6 +127,10 @@ h2 {
   font-size: 1.2rem;
   color: var(--cor-osso);
   margin: 0.2rem 0 0;
+  max-height: 2rem;
+  opacity: 1;
+  overflow: hidden;
+  transition: opacity 0.25s ease, max-height 0.25s ease, margin 0.25s ease;
 }
 
 .header-nav {
@@ -185,7 +193,9 @@ h2 {
 
 .site-header.scrolled .header-data,
 .site-header.scrolled .header-assinatura {
-  display: none;
+  max-height: 0;
+  opacity: 0;
+  margin: 0;
 }
 
 .site-header.scrolled .header-nav {
@@ -251,9 +261,9 @@ h2 {
 /* ---------- Footer dinâmico (js/app.js injeta o conteúdo em #siteFooter) ---------- */
 
 .site-footer {
+  width: 100%;
   text-align: center;
   background: var(--cor-vinho);
-  margin: 2rem -1.5rem -1.5rem;
   padding: 1.5rem;
   opacity: 0;
   transform: translateY(12px);
@@ -389,14 +399,13 @@ button[type="submit"]:disabled {
 
 .lista-presentes {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.75rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
   margin-top: 1.5rem;
 }
 
 @media (min-width: 700px) {
   .lista-presentes {
-    grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
   }
 }
@@ -547,7 +556,7 @@ button[type="submit"]:disabled {
 [hidden] { display: none !important; }
 
 @media (prefers-reduced-motion: reduce) {
-  .site-header, .header-logo, .site-footer {
+  .site-header, .header-inner, .header-logo, .header-data, .header-assinatura, .site-footer {
     transition: none;
   }
 }

@@ -141,9 +141,13 @@ const APP_CONFIG = {
     sentinela.after(header);
 
     if ('IntersectionObserver' in window) {
+      // rootMargin negativo cria uma folga de ~48px antes de trocar de estado —
+      // sem isso, um pixel de scroll pra cima e pra baixo (comum em trackpad/
+      // scroll inercial bem no topo da página) fazia o header "piscar" entre
+      // os dois estados repetidamente.
       const observador = new IntersectionObserver(function (entradas) {
         header.classList.toggle('scrolled', !entradas[0].isIntersecting);
-      }, { threshold: 0 });
+      }, { threshold: 0, rootMargin: '-48px 0px 0px 0px' });
       observador.observe(sentinela);
     }
 
