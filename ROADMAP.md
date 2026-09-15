@@ -86,6 +86,19 @@ presentes.html     → lista de presentes com QR Pix
 20. Pedir para 1–2 pessoas de fora testarem o fluxo completo (RSVP + escolher um presente) antes de mandar o link geral.
 21. Publicar o link definitivo.
 
+**Fase 6 — Header/footer dinâmicos, RSVP restrito, QR em popup, revisão A11y/segurança/UX**
+
+Arquitetura: header e footer passam a ser gerados uma vez em `js/app.js` (função que monta o HTML e injeta num `<div id="siteHeader">`/`<div id="siteFooter">` vazio em cada página) em vez de HTML duplicado em `index.html`/`rsvp.html`/`presentes.html` — evita as 3 cópias saírem de sincronia. Nav com os mesmos 6 links em toda página; em `rsvp.html`/`presentes.html` os links de âncora apontam para `index.html#secao`.
+
+22. **Header fixo, fundo vinho, com 2 estados por scroll** (todas as páginas):
+    - Estado topo: nomes + data + "til death do us part", menores que o hero atual (pensado pra desktop).
+    - Estado "rolado": nomes viram um "logo" compacto à esquerda, abas centralizadas — troca de estado via `IntersectionObserver` observando um sentinela no topo da página (mais barato que listener de `scroll`).
+23. **Footer fixo/vinho, revelado só ao chegar no fim da página** (todas as páginas) — `IntersectionObserver` com fade-in quando o footer entra na viewport.
+24. **Presentes:** renomear botão "Escolher" → "Gerar Pix QR Code"; QR passa a abrir num popup real (`<dialog>` nativo — foco preso, Esc fecha, `aria-modal`) com o QR e um botão "Copiar código Pix" (`navigator.clipboard.writeText` do payload BR Code, com mensagem de sucesso/erro).
+25. **RSVP:** remover as perguntas de churrasco e bebida (form + `Code.gs` para de gravar essas colunas — as colunas `Churrasco`/`Bebida` da aba RSVPs ficam obsoletas, mesmo padrão da remoção do `NomeDeQuemEscolheu`: você apaga manualmente depois).
+26. **RSVP:** autocomplete nos campos de acompanhante (mesma lista de convidados do campo principal) e validação estrita — nome principal e nomes de acompanhantes só podem ser um match exato (case/espaço-insensível) de um nome da lista vinda do `doGet`; bloquear envio com erro inline se não bater.
+27. **Revisão geral de acessibilidade/segurança/UX** depois das mudanças acima: contraste de texto sobre o novo header vinho (usar osso, não ouro, pro texto — ouro sobre vinho tem contraste fraco), labels/`aria-*` no popup e nos campos restritos, foco visível e navegação por teclado no `<dialog>`, `alt` nas fotos de presentes, e checagem de que nada novo (popup, clipboard) abre brecha de XSS — tudo via `textContent`/DOM, sem `innerHTML` com dado externo.
+
 ## Em aberto para a sessão com o Claude Code
 
 - Nome do repositório / URL final do GitHub Pages
