@@ -1,0 +1,108 @@
+:root {
+  --cor-primaria: #6b4f4f;
+  --cor-fundo: #fdf8f5;
+  --cor-texto: #2f2622;
+  --cor-borda: #d8c9c0;
+  --cor-erro: #b3261e;
+  --cor-sucesso: #2e7d32;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 1.5rem;
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+  font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  line-height: 1.5;
+}
+
+main {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+nav {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+nav a {
+  color: var(--cor-primaria);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.campo {
+  margin-bottom: 1.25rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+}
+
+input[type="text"],
+input[type="tel"],
+input[type="number"] {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: 6px;
+  font-size: 1rem;
+  background: #fff;
+}
+
+.opcoes-sim-nao {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.opcoes-sim-nao label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 400;
+}
+
+#acompanhantesContainer .campo {
+  margin-bottom: 0.6rem;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 0.8rem;
+  background: var(--cor-primaria);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button[type="submit"]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.mensagem-erro {
+  color: var(--cor-erro);
+  margin-top: 1rem;
+}
+
+.mensagem-sucesso {
+  color: var(--cor-sucesso);
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+[hidden] { display: none !important; }
