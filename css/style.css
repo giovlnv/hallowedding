@@ -1,10 +1,11 @@
 :root {
-  --cor-primaria: #6b4f4f;
-  --cor-fundo: #fdf8f5;
-  --cor-texto: #2f2622;
-  --cor-borda: #d8c9c0;
-  --cor-erro: #b3261e;
-  --cor-sucesso: #2e7d32;
+  --cor-base: #0C0908;
+  --cor-ouro: #B08D57;
+  --cor-vinho: #5C1B2E;
+  --cor-selo: #6B1620;
+  --cor-osso: #F1E7D3;
+  --cor-erro: #e0857a;
+  --cor-sucesso: #8fc19a;
 }
 
 * { box-sizing: border-box; }
@@ -12,10 +13,11 @@
 body {
   margin: 0;
   padding: 1.5rem;
-  background: var(--cor-fundo);
-  color: var(--cor-texto);
-  font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-  line-height: 1.5;
+  background: var(--cor-base);
+  color: var(--cor-osso);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.1rem;
+  line-height: 1.6;
 }
 
 main {
@@ -24,8 +26,12 @@ main {
 }
 
 h1 {
-  font-size: 1.5rem;
+  font-family: "Cormorant SC", "Cormorant Garamond", serif;
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
   text-align: center;
+  color: var(--cor-ouro);
   margin-bottom: 1.5rem;
 }
 
@@ -35,9 +41,18 @@ nav {
 }
 
 nav a {
-  color: var(--cor-primaria);
+  font-family: "Cormorant SC", serif;
+  font-variant: small-caps;
+  letter-spacing: 0.05em;
+  color: var(--cor-ouro);
   text-decoration: none;
   font-weight: 600;
+}
+
+hr, .divisor {
+  border: none;
+  border-top: 1px solid var(--cor-vinho);
+  margin: 1.5rem 0;
 }
 
 .campo {
@@ -46,8 +61,12 @@ nav a {
 
 label {
   display: block;
+  font-family: "Cormorant SC", serif;
+  font-variant: small-caps;
+  letter-spacing: 0.04em;
   margin-bottom: 0.4rem;
   font-weight: 600;
+  color: var(--cor-ouro);
 }
 
 input[type="text"],
@@ -55,10 +74,12 @@ input[type="tel"],
 input[type="number"] {
   width: 100%;
   padding: 0.6rem;
-  border: 1px solid var(--cor-borda);
-  border-radius: 6px;
+  border: 1px solid var(--cor-vinho);
+  border-radius: 4px;
+  font-family: inherit;
   font-size: 1rem;
-  background: #fff;
+  background: #16110f;
+  color: var(--cor-osso);
 }
 
 .opcoes-sim-nao {
@@ -70,7 +91,10 @@ input[type="number"] {
   display: flex;
   align-items: center;
   gap: 0.4rem;
+  font-family: inherit;
+  font-variant: normal;
   font-weight: 400;
+  color: var(--cor-osso);
 }
 
 #acompanhantesContainer .campo {
@@ -80,12 +104,15 @@ input[type="number"] {
 button[type="submit"] {
   width: 100%;
   padding: 0.8rem;
-  background: var(--cor-primaria);
-  color: #fff;
+  background: var(--cor-ouro);
+  color: var(--cor-base);
   border: none;
-  border-radius: 6px;
-  font-size: 1rem;
-  font-weight: 600;
+  border-radius: 4px;
+  font-family: "Cormorant SC", serif;
+  font-variant: small-caps;
+  letter-spacing: 0.05em;
+  font-size: 1.1rem;
+  font-weight: 700;
   cursor: pointer;
 }
 
@@ -100,9 +127,30 @@ button[type="submit"]:disabled {
 }
 
 .mensagem-sucesso {
-  color: var(--cor-sucesso);
+  font-family: "Pinyon Script", cursive;
+  font-size: 1.6rem;
+  color: var(--cor-ouro);
   text-align: center;
+}
+
+.endereco {
   font-size: 1.1rem;
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.aviso {
+  border-left: 2px solid var(--cor-selo);
+  padding-left: 0.8rem;
+  color: var(--cor-osso);
+  font-style: italic;
+}
+
+.mapa-embed {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--cor-vinho);
+  border-radius: 4px;
 }
 
 [hidden] { display: none !important; }

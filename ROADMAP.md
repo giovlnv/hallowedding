@@ -19,6 +19,8 @@ Duas sugestões sobre a implementação:
 
 ## Decisões tomadas
 
+**2026-09-15 — Identidade visual e estrutura do site.** Diretrizes de design (paleta gótico-vitoriana, tipografia Cormorant SC/Cormorant Garamond/Pinyon Script, tom de voz, estrutura de conteúdo por seção) definidas em `C:\Users\giova\Documents\documentos\wedding\diretrizes-site-casamento.md` (fora do repositório, arquivo pessoal). Decisão: manter a estrutura de **páginas separadas** já construída (`index.html`, `rsvp.html`, `local.html`, `presentes.html`) em vez de consolidar em uma única página com âncoras — menos retrabalho do que já foi feito nas Fases 1/2. A identidade visual (cores, fontes) foi aplicada em `css/style.css` e vale para todas as páginas.
+
 **2026-09-14 — Chave Pix: Mercado Pago, não Itaú.** A ideia inicial era usar a caixinha do Itaú, mas a chave aleatória que o app do Itaú gera para a caixinha ficou vinculada ao CPF da conta, não a uma chave EVP própria (confirmado ao decodificar dois BR Codes de teste gerados por lá — o campo de chave sempre voltava com 11 dígitos numéricos, formato de CPF). Optou-se por usar a chave aleatória do Mercado Pago/Mercado Livre (`79019b12-b967-4660-afdc-734b70d0ee7f`, formato EVP válido) para o QR de presentes. Isso não muda a arquitetura (Fase 4 continua igual), só o valor da constante `CHAVE_PIX` em `js/pix.js` quando essa fase for implementada.
 
 ## Estrutura de dados (Google Sheets — uma planilha, 3 abas)
