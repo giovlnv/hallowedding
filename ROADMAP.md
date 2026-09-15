@@ -1,0 +1,83 @@
+# Roadmap — Site do Casamento
+
+## Arquitetura definida
+
+- **Hospedagem:** GitHub Pages (site estático)
+- **Backend:** Google Apps Script (Web App) lendo/escrevendo numa Google Sheets
+- **Mapa:** iframe do Google Maps via "Compartilhar → Incorporar mapa" (sem API key, sem cartão)
+- **QR Pix:** gerado 100% no navegador em JavaScript, sem backend
+
+## Minha opinião sobre as escolhas
+
+GitHub Pages + Apps Script é uma combinação sólida e bem testada para esse tipo de site — zero custo, zero dependência de hospedagem instável, e a planilha já funciona como seu painel de acompanhamento.
+
+Duas sugestões sobre a implementação:
+
+1. Em vez de publicar a planilha de convidados na web (Arquivo → Publicar na web) para o autocomplete do RSVP, prefiro que a leitura da lista de nomes também passe pelo mesmo Apps Script Web App (um `doGet`), junto com a gravação do RSVP (`doPost`). Fica só uma URL para gerenciar, e a planilha em si nunca fica com um link público indexável.
+2. Como a chave é aleatória e aponta para a caixinha do Itaú: confirme antes se essa caixinha já tem uma chave Pix própria (o app do Itaú geralmente gera uma ao criar a caixinha) ou se você vai usar uma chave sua e transferir depois — isso muda qual chave entra no QR. Também recomendo testar com um Pix de valor baixo (R$0,01–R$1) antes de divulgar: o campo de mensagem ("informação adicional" do BR Code) sempre aparece no extrato de quem recebe, mas nem todo app de banco mostra esse campo com destaque na tela de confirmação de quem paga — bom saber disso com antecedência.
+
+## Estrutura de dados (Google Sheets — uma planilha, 3 abas)
+
+1. **Convidados** — lista que você pré-carrega: `Nome`
+2. **RSVPs** — respostas do formulário: `Timestamp, Nome, Telefone, QtdAcompanhantes, NomesAcompanhantes, Churrasco, Bebida`
+3. **PresentesEscolhidos** — log opcional, não trava nada: `Timestamp, Presente, Valor, NomeDeQuemEscolheu`
+
+## Estrutura do site (repositório GitHub Pages)
+
+```
+index.html        → home / navegação
+rsvp.html          → formulário de presença
+local.html         → mapa + endereço da recepção
+presentes.html     → lista de presentes com QR Pix
+/js/app.js         → lógica geral
+/js/pix.js         → geração do payload BR Code + QR
+/js/rsvp.js        → autocomplete de nomes + envio do formulário
+/css/style.css
+```
+
+## Apps Script (Web App único)
+
+- `doGet` → devolve a lista de nomes da aba "Convidados" em JSON (alimenta o autocomplete do RSVP)
+- `doPost` → recebe o RSVP e grava uma linha na aba "RSVPs"
+- (opcional) parâmetro extra no `doPost` para logar qual presente foi escolhido na aba "PresentesEscolhidos" — só para seu controle, sem bloquear o botão para os próximos visitantes
+
+## Fases do roadmap (ordem sugerida para o Claude Code)
+
+**Fase 0 — Preparação (fora do código)**
+1. Criar a planilha Google Sheets com as 3 abas e cabeçalhos de coluna.
+2. Preencher a aba "Convidados" com a lista de nomes.
+3. Confirmar no app do Itaú a chave Pix da caixinha (própria ou pessoal redirecionada).
+4. Criar o repositório no GitHub e ativar o GitHub Pages.
+
+**Fase 1 — Backend**
+5. Criar o Apps Script vinculado à planilha, com `doGet` (lista de convidados) e `doPost` (grava RSVP).
+6. Publicar como Web App ("qualquer pessoa com o link") e testar os dois endpoints isoladamente (curl/Postman) antes de integrar ao front-end.
+
+**Fase 2 — RSVP**
+7. Construir `rsvp.html` com campo de nome em autocomplete/dropdown puxando do `doGet`.
+8. Campos: telefone, qtd. de acompanhantes + nome de cada um (campos dinâmicos), churrasco (sim/não), bebida (sim/não).
+9. Enviar via `fetch()` POST ao Web App; tela de confirmação após o envio.
+10. Testar um envio completo e confirmar que a linha aparece certa na aba "RSVPs".
+
+**Fase 3 — Mapa**
+11. Gerar o iframe via "Compartilhar → Incorporar mapa" no Google Maps para: Rua Sabiá, Nº 46, Vila Tavares, Mauá – SP.
+12. Colar em `local.html`, com o endereço também em texto (para quem tiver dificuldade com o iframe no celular).
+
+**Fase 4 — Presentes + Pix**
+13. Montar `pix.js`: função que monta o payload BR Code (chave, nome do recebedor, cidade, valor, txid, "informação adicional" com o nome do presente) + checksum CRC16.
+14. Usar uma lib de geração de imagem de QR (ex.: `qrcode.js`) para desenhar o QR a partir do payload.
+15. Montar `presentes.html`: grade de presentes com nome/preço, botão "Escolher" que gera o QR daquele item na hora.
+16. Testar 2–3 presentes de valores diferentes com Pix real de valor baixo antes de divulgar o site.
+17. (Opcional) disparar um POST simples ao Web App a cada presente visualizado/escolhido, só para seu controle.
+
+**Fase 5 — Acabamento e testes finais**
+18. Estilizar (CSS livre).
+19. Testar em celular — a maioria dos convidados vai acessar por lá.
+20. Pedir para 1–2 pessoas de fora testarem o fluxo completo (RSVP + escolher um presente) antes de mandar o link geral.
+21. Publicar o link definitivo.
+
+## Em aberto para a sessão com o Claude Code
+
+- Nome do repositório / URL final do GitHub Pages
+- Lista definitiva de presentes com valores (a partir de R$25, incrementos de R$25, + 1 valor livre)
+- Textos e tom do site (convite, mensagens de confirmação etc.)
