@@ -263,6 +263,15 @@ button[type="submit"]:disabled {
   margin-bottom: 0.5rem;
 }
 
+.presente-foto {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
 .presente-nome {
   margin: 0 0 0.2rem;
   font-family: "Cormorant SC", serif;

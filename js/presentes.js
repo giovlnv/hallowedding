@@ -10,12 +10,36 @@
     return Number(valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   }
 
+  // Fotos livres de direitos (Pexels License) para os presentes que têm um
+  // equivalente temático genérico e não-ofensivo. Ver img/README.md para
+  // fonte e licença de cada arquivo. Chave = nome exato do presente na planilha.
+  const FOTOS_PRESENTES = {
+    'VALE PLAYLIST: Pular uma música da Taylor': 'img/fone-de-ouvido.jpg',
+    'VALE PLAYLIST: Pedir uma música fora da playlist': 'img/vinil.jpg',
+    'Café pra Giu não ficar emburrada': 'img/cafe.jpg',
+    'Churu pras meninas (Olivia, Shadow e Nekoma)': 'img/gato.jpg',
+    'Shot com as noivas': 'img/brinde.jpg',
+    'VALE PLAYLIST: 10 min sem KPop': 'img/celular-musica.jpg',
+    'VALE PLAYLIST: 10 min sem Taylor': 'img/microfone.jpg',
+    'Dar pitaco no vestido da Giu': 'img/vestido-noiva.jpg'
+  };
+
   function criarCard(presente) {
     const card = document.createElement('div');
     card.className = 'presente-card';
 
-    const imagem = document.createElement('div');
-    imagem.className = 'imagem-placeholder';
+    const arquivoFoto = FOTOS_PRESENTES[presente.nome];
+    let imagem;
+    if (arquivoFoto) {
+      imagem = document.createElement('img');
+      imagem.className = 'presente-foto';
+      imagem.src = arquivoFoto;
+      imagem.alt = presente.nome;
+      imagem.loading = 'lazy';
+    } else {
+      imagem = document.createElement('div');
+      imagem.className = 'imagem-placeholder';
+    }
     card.appendChild(imagem);
 
     const nome = document.createElement('p');
