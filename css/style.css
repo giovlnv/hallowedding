@@ -138,6 +138,20 @@ h2 {
   flex-wrap: nowrap;
   justify-content: center;
   gap: 0.4rem 1rem;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--cor-osso) transparent;
+  padding-bottom: 2px;
+}
+
+.header-nav::-webkit-scrollbar {
+  height: 4px;
+}
+
+.header-nav::-webkit-scrollbar-thumb {
+  background: var(--cor-osso);
+  border-radius: 2px;
 }
 
 .header-nav a {
@@ -202,20 +216,6 @@ h2 {
   flex: 1;
   gap: 0.3rem 0.8rem;
   font-size: 0.95rem;
-  min-width: 0;
-  overflow-x: auto;
-  scrollbar-width: thin;
-  scrollbar-color: var(--cor-osso) transparent;
-  padding-bottom: 2px;
-}
-
-.site-header.scrolled .header-nav::-webkit-scrollbar {
-  height: 4px;
-}
-
-.site-header.scrolled .header-nav::-webkit-scrollbar-thumb {
-  background: var(--cor-osso);
-  border-radius: 2px;
 }
 
 /* ---------- Mobile: menu sanduíche à esquerda, nomes fixos centralizados ---------- */
