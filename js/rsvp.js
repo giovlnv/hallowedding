@@ -11,6 +11,15 @@
   const MIN_CARACTERES_BUSCA = 3;
   let timeoutBusca = null;
 
+  function normalizar(texto) {
+    return (texto || '')
+      .toString()
+      .trim()
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[̀-ͯ]/g, '');
+  }
+
   // A lista completa de convidados nunca fica disponível no cliente — cada
   // busca traz só os nomes que batem com o que já foi digitado (mínimo de
   // 3 caracteres), evitando expor a lista inteira pra quem abre o site.
@@ -48,8 +57,8 @@
     const alvo = valor.trim();
     if (alvo.length < MIN_CARACTERES_BUSCA) return Promise.resolve(false);
     return buscarNomes(alvo).then(function (nomes) {
-      const alvoMin = alvo.toLowerCase();
-      return nomes.some(function (nome) { return nome.trim().toLowerCase() === alvoMin; });
+      const alvoNorm = normalizar(alvo);
+      return nomes.some(function (nome) { return normalizar(nome) === alvoNorm; });
     });
   }
 

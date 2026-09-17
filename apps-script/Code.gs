@@ -9,6 +9,15 @@ const SHEET_PRESENTES_ESCOLHIDOS = 'PresentesEscolhidos';
 const BUSCA_MIN_CARACTERES = 3;
 const BUSCA_MAX_RESULTADOS = 10;
 
+function normalizar(texto) {
+  return (texto || '')
+    .toString()
+    .trim()
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '');
+}
+
 function doGet(e) {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_CONVIDADOS);
   const values = sheet.getDataRange().getValues();
@@ -19,12 +28,13 @@ function doGet(e) {
   const colPresente = cabecalho.indexOf('Presentes');
   const colValor = cabecalho.indexOf('Preço');
 
-  const busca = ((e.parameter && e.parameter.busca) || '').trim().toLowerCase();
+  const buscaOriginal = ((e.parameter && e.parameter.busca) || '').trim();
+  const busca = normalizar(buscaOriginal);
   let nomes = [];
-  if (busca.length >= BUSCA_MIN_CARACTERES) {
+  if (buscaOriginal.length >= BUSCA_MIN_CARACTERES) {
     nomes = linhas
       .map(function (row) { return row[colNome]; })
-      .filter(function (nome) { return nome && nome.toLowerCase().indexOf(busca) !== -1; })
+      .filter(function (nome) { return nome && normalizar(nome).indexOf(busca) !== -1; })
       .slice(0, BUSCA_MAX_RESULTADOS);
   }
 
