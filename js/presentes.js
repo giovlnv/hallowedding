@@ -15,18 +15,25 @@
     return Number(valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   }
 
-  // Fotos livres de direitos (Pexels License) para os presentes que têm um
-  // equivalente temático genérico e não-ofensivo. Ver img/README.md para
-  // fonte e licença de cada arquivo. Chave = nome exato do presente na planilha.
+  // Fotos pros presentes que têm um equivalente temático. Ver img/README.md
+  // para fonte/licença de cada arquivo. Chave = nome exato do presente na planilha.
   const FOTOS_PRESENTES = {
-    'VALE PLAYLIST: Pular uma música da Taylor': 'img/fone-de-ouvido.jpg',
-    'VALE PLAYLIST: Pedir uma música fora da playlist': 'img/vinil.jpg',
     'Café pra Giu não ficar emburrada': 'img/cafe.jpg',
-    'Churu pras meninas (Olivia, Shadow e Nekoma)': 'img/gato.jpg',
-    'Shot com as noivas': 'img/brinde.jpg',
-    'VALE PLAYLIST: 10 min sem KPop': 'img/celular-musica.jpg',
-    'VALE PLAYLIST: 10 min sem Taylor': 'img/microfone.jpg',
-    'Dar pitaco no vestido da Giu': 'img/vestido-noiva.jpg'
+    'Ingresso competição de farmar aura': 'img/aura.jpg',
+    'Shot com as noivas': 'img/shot.jpg',
+    'Remedinho pra manter a Gio sã': 'img/remedios.jpg',
+    'VALE PLAYLIST: 10 min sem Taylor': 'img/taylor.png',
+    'VALE PLAYLIST: Pular uma música da Taylor': 'img/taylor-playlist.jpg',
+    'Fura-Fila do buffet': 'img/buffet.jpg',
+    'Terapia pra Giu não smt': 'img/terapia.jpg',
+    'Taxa Madrinha (ir todo de preto igual as madrinhas)': 'img/black-dress.jpg',
+    'Dar pitaco no vestido da Giu': 'img/pitaco.jpg',
+    'Patrocinar a lua de mel': 'img/wedding.jpg',
+    'Falar mal do Lula por 13 minutos': 'img/lula.jpg',
+    'Falar bem do Bolsonaro por 13 minutos': 'img/bolsonaro.jpg',
+    'Chamar a carne da Giu de borracha': 'img/carne.jpg',
+    'Lingerie pra Gio usar na lua de mel': 'img/lingerie.jpg',
+    'Vale Droga no casamento (meramente ilustrativo)': 'img/bebado.jpg'
   };
 
   const VALOR_LIVRE_NOME = 'Patrocinar a lua de mel';
