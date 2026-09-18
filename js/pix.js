@@ -36,11 +36,21 @@ function limitarTexto(texto, tamanho) {
   return String(texto).slice(0, tamanho);
 }
 
+// O padrão BR Code espera texto ASCII nestes campos. Além disso, a biblioteca
+// de QR usada (qrcodejs) mede o tamanho do texto em caracteres, não em bytes
+// UTF-8 — nomes de presente com acento (ex.: "música", "não") fazem a lib
+// escolher uma versão de QR pequena demais e depois estourar ao codificar os
+// bytes reais, lançando "code length overflow". Removendo os acentos aqui
+// evitamos os dois problemas de uma vez.
+function removerAcentos(texto) {
+  return String(texto).normalize('NFD').replace(/[̀-ͯ]/g, '');
+}
+
 function gerarPixPayload(valor, descricao) {
   const merchantAccountInfo =
     tlv('00', 'BR.GOV.BCB.PIX') +
     tlv('01', CHAVE_PIX) +
-    tlv('02', limitarTexto(descricao, 35));
+    tlv('02', limitarTexto(removerAcentos(descricao), 35));
 
   const additionalData = tlv('05', '***');
 
