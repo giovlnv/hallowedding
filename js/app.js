@@ -21,12 +21,9 @@ const APP_CONFIG = {
 // de cada página, pra não duplicar o mesmo HTML em index.html/rsvp.html/presentes.html.
 (function montarLayout() {
   const NAV_ITENS = [
-    { rotulo: 'Sobre nós', ancora: 'sobre-nos' },
-    { rotulo: 'A festa', ancora: 'festa' },
-    { rotulo: 'Como chegar', ancora: 'como-chegar' },
-    { rotulo: 'FAQ', ancora: 'faq' },
-    { rotulo: 'Confirmar presença', href: 'rsvp.html' },
-    { rotulo: 'Presentes', href: 'presentes.html' }
+    { rotulo: 'Início', href: 'index.html' },
+    { rotulo: 'RSVP', href: 'rsvp.html' },
+    { rotulo: 'Lista de presentes', href: 'presentes.html' }
   ];
 
   function paginaAtual() {
