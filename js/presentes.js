@@ -161,8 +161,8 @@
     .then(function (res) { return res.json(); })
     .then(function (data) {
       const presentes = (data.presentes || []).slice().sort(function (a, b) {
-        if (a.nome === VALOR_LIVRE_NOME) return 1;
-        if (b.nome === VALOR_LIVRE_NOME) return -1;
+        if (a.nome === VALOR_LIVRE_NOME) return -1;
+        if (b.nome === VALOR_LIVRE_NOME) return 1;
         return Number(a.valor) - Number(b.valor);
       });
       presentes.forEach(function (presente) {
