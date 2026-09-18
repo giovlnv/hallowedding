@@ -263,7 +263,7 @@ h2 {
     align-items: center;
     gap: 0.9rem;
     padding: 1.2rem;
-    background: var(--cor-vinho);
+    background: var(--cor-ouro);
     border-top: 1px solid var(--cor-osso);
   }
 
@@ -277,7 +277,7 @@ h2 {
 .site-footer {
   width: 100%;
   text-align: center;
-  background: var(--cor-vinho);
+  background: var(--cor-ouro);
   padding: 1.5rem;
   opacity: 0;
   transform: translateY(12px);
@@ -302,7 +302,7 @@ h2 {
 }
 
 .a-preencher {
-  color: var(--cor-base);
+  color: var(--cor-osso);
   opacity: 0.55;
   font-style: italic;
 }
@@ -320,7 +320,7 @@ summary {
 
 hr, .divisor {
   border: none;
-  border-top: 1px solid var(--cor-vinho);
+  border-top: 1px solid var(--cor-ouro);
   margin: 1.5rem 0;
 }
 
@@ -335,7 +335,7 @@ label {
   letter-spacing: 0.04em;
   margin-bottom: 0.4rem;
   font-weight: 600;
-  color: var(--cor-vinho);
+  color: var(--cor-ouro);
 }
 
 input[type="text"],
@@ -343,7 +343,7 @@ input[type="tel"],
 input[type="number"] {
   width: 100%;
   padding: 0.6rem;
-  border: 1px solid var(--cor-vinho);
+  border: 1px solid var(--cor-ouro);
   border-radius: 4px;
   font-family: inherit;
   font-size: 1rem;
@@ -373,7 +373,7 @@ input:invalid[data-tocado="true"] {
   padding: 0;
   list-style: none;
   background: #fff;
-  border: 1px solid var(--cor-vinho);
+  border: 1px solid var(--cor-ouro);
   border-radius: 4px;
   max-height: 180px;
   overflow-y: auto;
@@ -399,7 +399,7 @@ button[type="submit"] {
   width: 100%;
   padding: 0.8rem;
   background: var(--cor-ouro);
-  color: var(--cor-base);
+  color: var(--cor-osso);
   border: none;
   border-radius: 4px;
   font-family: "Cormorant SC", serif;
@@ -423,7 +423,7 @@ button[type="submit"]:disabled {
 .mensagem-sucesso {
   font-family: "Pinyon Script", cursive;
   font-size: 1.6rem;
-  color: var(--cor-vinho);
+  color: var(--cor-ouro);
   text-align: center;
 }
 
@@ -436,14 +436,14 @@ button[type="submit"]:disabled {
 .aviso {
   border-left: 2px solid var(--cor-selo);
   padding-left: 0.8rem;
-  color: var(--cor-base);
+  color: var(--cor-osso);
   font-style: italic;
 }
 
 .mapa-embed {
   width: 100%;
   aspect-ratio: 4 / 3;
-  border: 1px solid var(--cor-vinho);
+  border: 1px solid var(--cor-ouro);
   border-radius: 4px;
 }
 
@@ -461,7 +461,7 @@ button[type="submit"]:disabled {
 }
 
 .presente-card {
-  border: 1px solid var(--cor-vinho);
+  border: 1px solid var(--cor-ouro);
   border-radius: 6px;
   padding: 0.6rem;
   text-align: center;
@@ -469,7 +469,7 @@ button[type="submit"]:disabled {
 
 .imagem-placeholder {
   aspect-ratio: 1 / 1;
-  border: 1px dashed var(--cor-vinho);
+  border: 1px dashed var(--cor-ouro);
   border-radius: 4px;
   margin-bottom: 0.5rem;
 }
@@ -487,7 +487,7 @@ button[type="submit"]:disabled {
   margin: 0 0 0.2rem;
   font-family: "Cormorant SC", serif;
   font-size: 0.95rem;
-  color: var(--cor-vinho);
+  color: var(--cor-ouro);
 }
 
 .presente-valor {
@@ -500,8 +500,8 @@ button[type="submit"]:disabled {
   width: 100%;
   padding: 0.4rem;
   background: transparent;
-  color: var(--cor-vinho);
-  border: 1px solid var(--cor-vinho);
+  color: var(--cor-ouro);
+  border: 1px solid var(--cor-ouro);
   border-radius: 4px;
   font-family: "Cormorant SC", serif;
   font-variant: small-caps;
@@ -515,7 +515,7 @@ button[type="submit"]:disabled {
   width: 100%;
   padding: 0.5rem;
   margin: 0 0 0.5rem;
-  border: 1px solid var(--cor-vinho);
+  border: 1px solid var(--cor-ouro);
   border-radius: 4px;
   font-family: inherit;
   font-size: 0.9rem;
@@ -564,7 +564,7 @@ button[type="submit"]:disabled {
   font-family: "Space Mono", monospace;
   font-size: 0.7rem;
   background: #fff;
-  border: 1px solid var(--cor-vinho);
+  border: 1px solid var(--cor-ouro);
   border-radius: 4px;
   padding: 0.5rem;
   margin-bottom: 0.8rem;
@@ -575,7 +575,7 @@ button[type="submit"]:disabled {
   width: 100%;
   padding: 0.6rem;
   background: var(--cor-ouro);
-  color: var(--cor-base);
+  color: var(--cor-osso);
   border: none;
   border-radius: 4px;
   font-family: "Cormorant SC", serif;
@@ -596,7 +596,7 @@ button[type="submit"]:disabled {
 .botao-fechar {
   background: none;
   border: none;
-  color: var(--cor-vinho);
+  color: var(--cor-ouro);
   text-decoration: underline;
   cursor: pointer;
   font-family: inherit;
