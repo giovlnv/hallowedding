@@ -307,6 +307,10 @@ h2 {
   font-style: italic;
 }
 
+.ajuda-nome {
+  font-size: 0.85rem;
+}
+
 details {
   border-bottom: 1px solid var(--cor-ouro-dim);
   padding: 0.6rem 0;

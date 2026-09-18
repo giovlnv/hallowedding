@@ -1,0 +1,32 @@
+name: checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Sintaxe JS (js/*.js)
+        run: |
+          for f in js/*.js; do
+            node --check "$f"
+          done
+
+      - name: Sintaxe JS (apps-script/Code.gs)
+        run: node --check < apps-script/Code.gs
+
+      - name: Validar HTML (index.html, rsvp.html, presentes.html)
+        run: npx --yes html-validate@11.16.0 -c .htmlvalidate.json index.html rsvp.html presentes.html
+
+      - name: Referências locais quebradas (href/src, FOTOS_PRESENTES)
+        run: node scripts/check-refs.js

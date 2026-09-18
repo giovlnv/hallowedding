@@ -27,7 +27,10 @@
       return Promise.resolve([]);
     }
     return fetch(APP_CONFIG.EXEC_URL + '?busca=' + encodeURIComponent(busca))
-      .then(function (res) { return res.json(); })
+      .then(function (res) {
+        if (!res.ok) { throw new Error('HTTP ' + res.status); }
+        return res.json();
+      })
       .then(function (data) { return data.nomes || []; })
       .catch(function () { return []; });
   }
@@ -195,7 +198,10 @@
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify(payload)
         })
-          .then(function (res) { return res.json(); })
+          .then(function (res) {
+            if (!res.ok) { throw new Error('HTTP ' + res.status); }
+            return res.json();
+          })
           .then(function (data) {
             if (!data.ok) { throw new Error(data.erro || 'Erro ao enviar'); }
             form.hidden = true;

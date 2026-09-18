@@ -108,15 +108,20 @@
     mensagemErro.hidden = true;
     mensagemCopiado.textContent = '';
 
-    payloadAtual = gerarPixPayload(presente.valor, presente.nome);
-
-    qrCanvas.innerHTML = '';
-    new QRCode(qrCanvas, {
-      text: payloadAtual,
-      width: 220,
-      height: 220,
-      correctLevel: QRCode.CorrectLevel.L
-    });
+    try {
+      payloadAtual = gerarPixPayload(presente.valor, presente.nome);
+      qrCanvas.innerHTML = '';
+      new QRCode(qrCanvas, {
+        text: payloadAtual,
+        width: 220,
+        height: 220,
+        correctLevel: QRCode.CorrectLevel.L
+      });
+    } catch (erro) {
+      mensagemErro.textContent = 'Não foi possível gerar o QR para este presente. Tente novamente.';
+      mensagemErro.hidden = false;
+      return;
+    }
 
     qrDescricao.textContent = presente.nome + ' — ' + formatarReais(presente.valor);
     pixCopiaCola.textContent = payloadAtual;
@@ -158,7 +163,10 @@
   });
 
   fetch(APP_CONFIG.EXEC_URL)
-    .then(function (res) { return res.json(); })
+    .then(function (res) {
+      if (!res.ok) { throw new Error('HTTP ' + res.status); }
+      return res.json();
+    })
     .then(function (data) {
       const presentes = (data.presentes || []).slice().sort(function (a, b) {
         if (a.nome === VALOR_LIVRE_NOME) return -1;

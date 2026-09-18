@@ -43,6 +43,9 @@ presentes.html     → lista de presentes com QR Pix
 /js/presentes.js   → catálogo de presentes + geração de QR
 /css/style.css
 /img/              → fotos reais dos presentes (vazia por enquanto)
+/scripts/check-refs.js        → checagem de referências locais quebradas, rodada pelo CI
+/.htmlvalidate.json            → config do html-validate usado pelo CI
+/.github/workflows/checks.yml  → CI: sintaxe JS, validade de HTML, referências locais quebradas
 ```
 
 ## Apps Script (Web App único)

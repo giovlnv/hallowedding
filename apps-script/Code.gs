@@ -19,32 +19,39 @@ function normalizar(texto) {
 }
 
 function doGet(e) {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_CONVIDADOS);
-  const values = sheet.getDataRange().getValues();
-  const cabecalho = values[0];
-  const linhas = values.slice(1);
+  try {
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_CONVIDADOS);
+    if (!sheet) {
+      return jsonError('Aba "' + SHEET_CONVIDADOS + '" não encontrada na planilha.');
+    }
+    const values = sheet.getDataRange().getValues();
+    const cabecalho = values[0];
+    const linhas = values.slice(1);
 
-  const colNome = cabecalho.indexOf('Nome');
-  const colPresente = cabecalho.indexOf('Presentes');
-  const colValor = cabecalho.indexOf('Preço');
+    const colNome = cabecalho.indexOf('Nome');
+    const colPresente = cabecalho.indexOf('Presentes');
+    const colValor = cabecalho.indexOf('Preço');
 
-  const buscaOriginal = ((e.parameter && e.parameter.busca) || '').trim();
-  const busca = normalizar(buscaOriginal);
-  let nomes = [];
-  if (buscaOriginal.length >= BUSCA_MIN_CARACTERES) {
-    nomes = linhas
-      .map(function (row) { return row[colNome]; })
-      .filter(function (nome) { return nome && normalizar(nome).indexOf(busca) !== -1; })
-      .slice(0, BUSCA_MAX_RESULTADOS);
+    const buscaOriginal = ((e.parameter && e.parameter.busca) || '').trim();
+    const busca = normalizar(buscaOriginal);
+    let nomes = [];
+    if (buscaOriginal.length >= BUSCA_MIN_CARACTERES) {
+      nomes = linhas
+        .map(function (row) { return row[colNome]; })
+        .filter(function (nome) { return nome && normalizar(nome).indexOf(busca) !== -1; })
+        .slice(0, BUSCA_MAX_RESULTADOS);
+    }
+
+    const presentes = linhas
+      .map(function (row) { return { nome: row[colPresente], valor: row[colValor] }; })
+      .filter(function (p) { return p.nome && p.valor; });
+
+    return ContentService
+      .createTextOutput(JSON.stringify({ nomes: nomes, presentes: presentes }))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return jsonError('Erro ao buscar dados: ' + err.message);
   }
-
-  const presentes = linhas
-    .map(function (row) { return { nome: row[colPresente], valor: row[colValor] }; })
-    .filter(function (p) { return p.nome && p.valor; });
-
-  return ContentService
-    .createTextOutput(JSON.stringify({ nomes: nomes, presentes: presentes }))
-    .setMimeType(ContentService.MimeType.JSON);
 }
 
 function doPost(e) {
@@ -67,18 +74,25 @@ function gravarRsvp(body) {
     return jsonError('Campo "nome" é obrigatório.');
   }
 
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_RSVPS);
-  sheet.appendRow([
-    new Date(),
-    body.nome,
-    body.telefone || '',
-    body.qtdAcompanhantes || 0,
-    body.nomesAcompanhantes || ''
-  ]);
+  try {
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_RSVPS);
+    if (!sheet) {
+      return jsonError('Aba "' + SHEET_RSVPS + '" não encontrada na planilha.');
+    }
+    sheet.appendRow([
+      new Date(),
+      body.nome,
+      body.telefone || '',
+      body.qtdAcompanhantes || 0,
+      body.nomesAcompanhantes || ''
+    ]);
 
-  return ContentService
-    .createTextOutput(JSON.stringify({ ok: true }))
-    .setMimeType(ContentService.MimeType.JSON);
+    return ContentService
+      .createTextOutput(JSON.stringify({ ok: true }))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return jsonError('Erro ao gravar RSVP: ' + err.message);
+  }
 }
 
 function gravarPresenteEscolhido(body) {
@@ -86,16 +100,23 @@ function gravarPresenteEscolhido(body) {
     return jsonError('Campo "presente" é obrigatório.');
   }
 
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_PRESENTES_ESCOLHIDOS);
-  sheet.appendRow([
-    new Date(),
-    body.presente,
-    body.valor || ''
-  ]);
+  try {
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_PRESENTES_ESCOLHIDOS);
+    if (!sheet) {
+      return jsonError('Aba "' + SHEET_PRESENTES_ESCOLHIDOS + '" não encontrada na planilha.');
+    }
+    sheet.appendRow([
+      new Date(),
+      body.presente,
+      body.valor || ''
+    ]);
 
-  return ContentService
-    .createTextOutput(JSON.stringify({ ok: true }))
-    .setMimeType(ContentService.MimeType.JSON);
+    return ContentService
+      .createTextOutput(JSON.stringify({ ok: true }))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return jsonError('Erro ao gravar presente escolhido: ' + err.message);
+  }
 }
 
 function jsonError(mensagem) {
