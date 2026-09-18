@@ -5,8 +5,11 @@ const NOME_RECEBEDOR = 'GIOVANNA APARECIDA VILLAN'; // truncado a 25 caracteres,
 const CIDADE_RECEBEDOR = 'SAO PAULO';
 
 function tlv(id, valor) {
-  const tamanho = String(valor.length).padStart(2, '0');
-  return id + tamanho + valor;
+  const texto = String(valor);
+  if (texto.length > 99) {
+    throw new RangeError(`Valor excede o limite do campo ${id}`);
+  }
+  return id + String(texto.length).padStart(2, '0') + texto;
 }
 
 function crc16(str) {
@@ -22,7 +25,11 @@ function crc16(str) {
 }
 
 function formatarValor(valor) {
-  return Number(valor).toFixed(2);
+  const numero = Number(valor);
+  if (!Number.isFinite(numero) || numero < 0) {
+    throw new TypeError('O valor do Pix deve ser um número não negativo.');
+  }
+  return numero.toFixed(2);
 }
 
 function limitarTexto(texto, tamanho) {
