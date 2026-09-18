@@ -114,7 +114,8 @@
     new QRCode(qrCanvas, {
       text: payloadAtual,
       width: 220,
-      height: 220
+      height: 220,
+      correctLevel: QRCode.CorrectLevel.L
     });
 
     qrDescricao.textContent = presente.nome + ' — ' + formatarReais(presente.valor);
