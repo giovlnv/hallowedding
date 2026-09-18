@@ -45,4 +45,4 @@ Instruções completas de deploy em [`apps-script/README.md`](apps-script/README
 
 ## Chave Pix
 
-Chave aleatória (EVP) do Mercado Pago/Mercado Livre, não a caixinha do Itaú — o Itaú gera uma chave vinculada ao CPF da conta em vez de uma chave EVP própria, então não servia para o QR.
+Chave aleatória (EVP) do Mercado Pago/Mercado Livre.
