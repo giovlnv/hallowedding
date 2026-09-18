@@ -20,8 +20,8 @@ section {
 body {
   margin: 0;
   padding: 0;
-  background: var(--cor-osso);
-  color: var(--cor-base);
+  background: var(--cor-base);
+  color: var(--cor-osso);
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: 1.1rem;
   line-height: 1.6;
@@ -49,14 +49,14 @@ h1 {
   font-weight: 600;
   letter-spacing: 0.03em;
   text-align: center;
-  color: var(--cor-vinho);
+  color: var(--cor-ouro);
   margin-bottom: 1.5rem;
 }
 
 h2 {
   font-family: "Cormorant SC", "Cormorant Garamond", serif;
   font-size: 1.4rem;
-  color: var(--cor-vinho);
+  color: var(--cor-ouro);
   text-align: center;
   margin-bottom: 1rem;
 }
@@ -72,7 +72,7 @@ h2 {
   top: 0;
   z-index: 20;
   width: 100%;
-  background: var(--cor-vinho);
+  background: var(--cor-ouro);
 }
 
 .header-inner {
@@ -357,6 +357,42 @@ input:invalid[data-tocado="true"] {
 
 #acompanhantesContainer .campo {
   margin-bottom: 0.6rem;
+}
+
+.autocomplete-wrapper {
+  position: relative;
+}
+
+.sugestoes-nome {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  margin: 2px 0 0;
+  padding: 0;
+  list-style: none;
+  background: #fff;
+  border: 1px solid var(--cor-vinho);
+  border-radius: 4px;
+  max-height: 180px;
+  overflow-y: auto;
+  box-shadow: 0 4px 10px rgba(12, 9, 8, 0.15);
+}
+
+.sugestoes-nome[hidden] {
+  display: none;
+}
+
+.sugestoes-nome li {
+  padding: 0.55rem 0.6rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.sugestoes-nome li:hover,
+.sugestoes-nome li.ativo {
+  background: var(--cor-osso);
 }
 
 button[type="submit"] {

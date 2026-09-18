@@ -1,6 +1,5 @@
 (function () {
   const form = document.getElementById('formRsvp');
-  const listaConvidados = document.getElementById('listaConvidados');
   const qtdInput = document.getElementById('qtdAcompanhantes');
   const acompanhantesContainer = document.getElementById('acompanhantesContainer');
   const botaoEnviar = document.getElementById('botaoEnviar');
@@ -9,7 +8,6 @@
   const nomeInput = document.getElementById('nome');
 
   const MIN_CARACTERES_BUSCA = 3;
-  let timeoutBusca = null;
 
   function normalizar(texto) {
     return (texto || '')
@@ -34,24 +32,67 @@
       .catch(function () { return []; });
   }
 
-  function atualizarDatalist(nomes) {
-    listaConvidados.innerHTML = '';
-    nomes.forEach(function (nome) {
-      const option = document.createElement('option');
-      option.value = nome;
-      listaConvidados.appendChild(option);
+  // O <datalist> nativo do navegador filtra as opções exibidas comparando o
+  // texto digitado byte a byte — ele não sabe que "joao" e "João" são o
+  // mesmo nome nem que "JOAO" e "joao" também são. Isso fazia a sugestão
+  // sumir mesmo quando o servidor já tinha retornado o nome certo. Por isso
+  // cada campo de nome ganha seu próprio dropdown customizado (uma <ul>
+  // logo abaixo do input) que exibe exatamente o que o servidor devolveu,
+  // sem re-filtrar por conta própria.
+  function criarAutocomplete(input) {
+    const wrapper = input.closest('.autocomplete-wrapper');
+    const lista = wrapper.querySelector('.sugestoes-nome');
+    let timeoutBusca = null;
+
+    function esconder() {
+      lista.hidden = true;
+      lista.innerHTML = '';
+      input.setAttribute('aria-expanded', 'false');
+    }
+
+    function mostrar(nomes) {
+      lista.innerHTML = '';
+      if (!nomes.length) {
+        esconder();
+        return;
+      }
+      nomes.forEach(function (nome) {
+        const item = document.createElement('li');
+        item.textContent = nome;
+        item.setAttribute('role', 'option');
+        // mousedown (não click) dispara antes do blur do input, então o
+        // valor é preenchido antes da lista sumir.
+        item.addEventListener('mousedown', function (event) {
+          event.preventDefault();
+          input.value = nome;
+          esconder();
+        });
+        lista.appendChild(item);
+      });
+      lista.hidden = false;
+      input.setAttribute('aria-expanded', 'true');
+    }
+
+    input.addEventListener('input', function () {
+      const valor = input.value;
+      clearTimeout(timeoutBusca);
+      timeoutBusca = setTimeout(function () {
+        buscarNomes(valor).then(mostrar);
+      }, 250);
+    });
+
+    input.addEventListener('blur', function () {
+      // Delay pra permitir que o mousedown de um item da lista seja
+      // processado antes do blur escondê-la.
+      setTimeout(esconder, 150);
+    });
+
+    input.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') esconder();
     });
   }
 
-  function aoDigitar(event) {
-    const valor = event.target.value;
-    clearTimeout(timeoutBusca);
-    timeoutBusca = setTimeout(function () {
-      buscarNomes(valor).then(atualizarDatalist);
-    }, 250);
-  }
-
-  nomeInput.addEventListener('input', aoDigitar);
+  criarAutocomplete(nomeInput);
 
   function nomeValido(valor) {
     const alvo = valor.trim();
@@ -72,18 +113,32 @@
       label.setAttribute('for', 'acompanhante' + i);
       label.textContent = 'Nome do acompanhante ' + (i + 1);
 
+      const wrapper = document.createElement('div');
+      wrapper.className = 'autocomplete-wrapper';
+
       const input = document.createElement('input');
       input.type = 'text';
       input.id = 'acompanhante' + i;
       input.className = 'acompanhante-input';
-      input.setAttribute('list', 'listaConvidados');
       input.autocomplete = 'off';
+      input.setAttribute('role', 'combobox');
+      input.setAttribute('aria-expanded', 'false');
+      input.setAttribute('aria-autocomplete', 'list');
       input.required = true;
-      input.addEventListener('input', aoDigitar);
+
+      const sugestoes = document.createElement('ul');
+      sugestoes.className = 'sugestoes-nome';
+      sugestoes.setAttribute('role', 'listbox');
+      sugestoes.hidden = true;
+
+      wrapper.appendChild(input);
+      wrapper.appendChild(sugestoes);
 
       campo.appendChild(label);
-      campo.appendChild(input);
+      campo.appendChild(wrapper);
       acompanhantesContainer.appendChild(campo);
+
+      criarAutocomplete(input);
     }
   }
 
