@@ -301,12 +301,6 @@ h2 {
   margin: 0.3rem 0 0;
 }
 
-.a-preencher {
-  color: var(--cor-osso);
-  opacity: 0.55;
-  font-style: italic;
-}
-
 .ajuda-nome {
   font-size: 0.85rem;
 }
