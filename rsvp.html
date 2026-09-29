@@ -22,6 +22,18 @@
       </div>
 
       <div class="campo">
+        <span class="rotulo-presenca">Você vai comparecer?</span>
+        <div class="presenca-opcoes" role="radiogroup" aria-label="Presença do convidado">
+          <label class="presenca-opcao">
+            <input type="radio" name="presenca" value="sim" checked> Sim, vou
+          </label>
+          <label class="presenca-opcao">
+            <input type="radio" name="presenca" value="nao"> Não vou
+          </label>
+        </div>
+      </div>
+
+      <div class="campo">
         <label for="telefone">Telefone (WhatsApp)</label>
         <input type="tel" id="telefone" name="telefone" placeholder="DDD + número" required>
       </div>
@@ -33,18 +45,6 @@
         </div>
 
         <div id="acompanhantesContainer"></div>
-      </div>
-
-      <div class="campo">
-        <span class="rotulo-presenca">Você vai comparecer?</span>
-        <div class="presenca-opcoes" role="radiogroup" aria-label="Presença do convidado">
-          <label class="presenca-opcao">
-            <input type="radio" name="presenca" value="sim" checked> Sim, vou
-          </label>
-          <label class="presenca-opcao">
-            <input type="radio" name="presenca" value="nao"> Não vou
-          </label>
-        </div>
       </div>
 
       <button type="submit" id="botaoEnviar">Enviar resposta</button>
