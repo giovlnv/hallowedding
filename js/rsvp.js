@@ -140,13 +140,57 @@
       wrapper.appendChild(input);
       wrapper.appendChild(sugestoes);
 
+      const presencaWrapper = document.createElement('div');
+      presencaWrapper.className = 'presenca-opcoes';
+      presencaWrapper.setAttribute('role', 'radiogroup');
+      presencaWrapper.setAttribute('aria-label', 'Presença do acompanhante ' + (i + 1));
+
+      const opcaoSim = document.createElement('label');
+      opcaoSim.className = 'presenca-opcao';
+      const radioSim = document.createElement('input');
+      radioSim.type = 'radio';
+      radioSim.name = 'presencaAcompanhante' + i;
+      radioSim.value = 'sim';
+      radioSim.checked = true;
+      opcaoSim.appendChild(radioSim);
+      opcaoSim.appendChild(document.createTextNode(' Sim, vai'));
+
+      const opcaoNao = document.createElement('label');
+      opcaoNao.className = 'presenca-opcao';
+      const radioNao = document.createElement('input');
+      radioNao.type = 'radio';
+      radioNao.name = 'presencaAcompanhante' + i;
+      radioNao.value = 'nao';
+      opcaoNao.appendChild(radioNao);
+      opcaoNao.appendChild(document.createTextNode(' Não vai'));
+
+      presencaWrapper.appendChild(opcaoSim);
+      presencaWrapper.appendChild(opcaoNao);
+
       campo.appendChild(label);
       campo.appendChild(wrapper);
+      campo.appendChild(presencaWrapper);
       acompanhantesContainer.appendChild(campo);
 
       criarAutocomplete(input);
     }
   }
+
+  function atualizarBlocoAcompanhantes(valor) {
+    blocoAcompanhantes.hidden = valor === 'nao';
+    if (valor === 'nao') {
+      qtdInput.value = '0';
+      renderAcompanhantes(0);
+    }
+  }
+
+  presencaInputs.forEach(function (input) {
+    input.addEventListener('change', function () {
+      if (input.checked) {
+        atualizarBlocoAcompanhantes(input.value);
+      }
+    });
+  });
 
   qtdInput.addEventListener('input', function () {
     const qtd = Math.max(0, Math.min(10, parseInt(qtdInput.value, 10) || 0));
@@ -157,7 +201,11 @@
     event.preventDefault();
     mensagemErro.hidden = true;
 
-    const acompanhanteInputs = Array.from(document.querySelectorAll('.acompanhante-input'));
+    const presencaSelecionada = document.querySelector('input[name="presenca"]:checked');
+    const presenca = presencaSelecionada ? presencaSelecionada.value : 'sim';
+    const acompanhanteInputs = presenca === 'nao'
+      ? []
+      : Array.from(document.querySelectorAll('.acompanhante-input'));
 
     botaoEnviar.disabled = true;
     botaoEnviar.textContent = 'Verificando...';
@@ -183,15 +231,20 @@
           throw new Error('validacao');
         }
 
-        const nomesAcompanhantes = acompanhanteInputs
-          .map(function (input) { return input.value.trim(); })
-          .join(', ');
+        const acompanhantes = acompanhanteInputs.map(function (input, i) {
+          const radioChecked = document.querySelector('input[name="presencaAcompanhante' + i + '"]:checked');
+          return {
+            nome: input.value.trim(),
+            presenca: radioChecked ? radioChecked.value : 'sim'
+          };
+        });
 
         const payload = {
           nome: nomeInput.value.trim(),
+          presenca: presenca,
           telefone: document.getElementById('telefone').value.trim(),
-          qtdAcompanhantes: parseInt(qtdInput.value, 10) || 0,
-          nomesAcompanhantes: nomesAcompanhantes
+          qtdAcompanhantes: presenca === 'nao' ? 0 : (parseInt(qtdInput.value, 10) || 0),
+          acompanhantes: acompanhantes
         };
 
         botaoEnviar.textContent = 'Enviando...';
@@ -214,13 +267,13 @@
       .catch(function (erro) {
         if (erro && erro.message === 'validacao') {
           botaoEnviar.disabled = false;
-          botaoEnviar.textContent = 'Confirmar presença';
+          botaoEnviar.textContent = 'Enviar resposta';
           return;
         }
         mensagemErro.textContent = 'Não foi possível enviar sua confirmação. Tente novamente em instantes.';
         mensagemErro.hidden = false;
         botaoEnviar.disabled = false;
-        botaoEnviar.textContent = 'Confirmar presença';
+        botaoEnviar.textContent = 'Enviar resposta';
       });
   });
 })();

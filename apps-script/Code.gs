@@ -79,12 +79,19 @@ function gravarRsvp(body) {
     if (!sheet) {
       return jsonError('Aba "' + SHEET_RSVPS + '" não encontrada na planilha.');
     }
+    const presencaGuestTexto = body.presenca === 'nao' ? 'Não' : 'Sim';
+    const acompanhantes = Array.isArray(body.acompanhantes) ? body.acompanhantes : [];
+    const nomesAcompanhantesTexto = acompanhantes
+      .map(function (a) { return a.nome + ' (' + (a.presenca === 'nao' ? 'Não' : 'Sim') + ')'; })
+      .join(', ');
+
     sheet.appendRow([
       new Date(),
       body.nome,
+      presencaGuestTexto,
       body.telefone || '',
       body.qtdAcompanhantes || 0,
-      body.nomesAcompanhantes || ''
+      nomesAcompanhantesTexto
     ]);
 
     return ContentService

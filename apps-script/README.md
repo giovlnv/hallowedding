@@ -5,7 +5,7 @@
 Pronta: [Casamento - RSVP e Convidados](https://docs.google.com/spreadsheets/d/1JfeTdoMXUlDjca5QzalbdbN87l4eL9mOq-J-h9qdKow/edit) — já criada com as 3 abas e cabeçalhos, e a aba **Convidados** já preenchida com os nomes de `convidados.txt`.
 
 - **Convidados**: `Nome`
-- **RSVPs**: `Timestamp | Nome | Telefone | QtdAcompanhantes | NomesAcompanhantes`
+- **RSVPs**: `Timestamp | Nome | Presenca | Telefone | QtdAcompanhantes | NomesAcompanhantes`
 - **PresentesEscolhidos**: `Timestamp | Presente | Valor`
 
 Preencha a aba **Convidados** com a lista de nomes (um por linha, coluna A).
@@ -32,7 +32,7 @@ curl "https://script.google.com/macros/s/SEU_ID/exec"
 # doPost — deve devolver {"ok": true} e criar uma linha em RSVPs
 curl -X POST "https://script.google.com/macros/s/SEU_ID/exec" \
   -H "Content-Type: text/plain;charset=utf-8" \
-  -d '{"nome":"Teste","telefone":"DDD+numero","qtdAcompanhantes":1,"nomesAcompanhantes":"Fulano"}'
+  -d '{"nome":"Teste","presenca":"sim","telefone":"DDD+numero","qtdAcompanhantes":1,"acompanhantes":[{"nome":"Fulano","presenca":"sim"}]}'
 ```
 
 Confira na aba **RSVPs** se a linha apareceu certa.
@@ -42,3 +42,7 @@ Confira na aba **RSVPs** se a linha apareceu certa.
 ## 5. Cada vez que editar o Code.gs
 
 Web Apps do Apps Script **não** atualizam sozinhos ao salvar — é preciso ir em **Implantar → Gerenciar implantações → editar (ícone de lápis) → Nova versão → Implantar** para a URL `/exec` passar a servir a versão nova.
+
+## 6. Coluna "Presenca" nova
+
+Esse schema adicionou a coluna **Presenca** na aba **RSVPs**. Ela não aparece sozinha — adicione o cabeçalho `Presenca` manualmente na planilha (3ª coluna, depois de Nome), além de redeployar o Code.gs conforme o passo acima.

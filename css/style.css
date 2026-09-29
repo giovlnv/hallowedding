@@ -363,6 +363,28 @@ input:invalid[data-tocado="true"] {
   margin-bottom: 0.6rem;
 }
 
+.presenca-opcoes {
+  display: flex;
+  gap: 1rem;
+}
+
+.presenca-opcao {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: inherit;
+  font-variant: normal;
+  letter-spacing: normal;
+  text-transform: none;
+  font-weight: 400;
+  color: var(--cor-osso);
+  cursor: pointer;
+}
+
+.presenca-opcao input {
+  accent-color: var(--cor-ouro);
+}
+
 .autocomplete-wrapper {
   position: relative;
 }
@@ -392,6 +414,7 @@ input:invalid[data-tocado="true"] {
   padding: 0.55rem 0.6rem;
   cursor: pointer;
   font-size: 0.95rem;
+  color: var(--cor-ouro);
 }
 
 .sugestoes-nome li:hover,
