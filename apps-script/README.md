@@ -5,7 +5,7 @@
 Pronta: [Casamento - RSVP e Convidados](https://docs.google.com/spreadsheets/d/1JfeTdoMXUlDjca5QzalbdbN87l4eL9mOq-J-h9qdKow/edit) — já criada com as 3 abas e cabeçalhos, e a aba **Convidados** já preenchida com os nomes de `convidados.txt`.
 
 - **Convidados**: `Nome`
-- **RSVPs**: `Timestamp | Nome | Presenca | Telefone | QtdAcompanhantes | NomesAcompanhantes`
+- **RSVPs**: `Timestamp | Nome | Telefone | QtdAcompanhantes | NomesAcompanhantes | Presenca`
 - **PresentesEscolhidos**: `Timestamp | Presente | Valor`
 
 Preencha a aba **Convidados** com a lista de nomes (um por linha, coluna A).
@@ -45,4 +45,4 @@ Web Apps do Apps Script **não** atualizam sozinhos ao salvar — é preciso ir 
 
 ## 6. Coluna "Presenca" nova
 
-Esse schema adicionou a coluna **Presenca** na aba **RSVPs**. Ela não aparece sozinha — adicione o cabeçalho `Presenca` manualmente na planilha (3ª coluna, depois de Nome), além de redeployar o Code.gs conforme o passo acima.
+Esse schema adicionou a coluna **Presenca** na aba **RSVPs**. Ela não aparece sozinha — adicione o cabeçalho `Presenca` manualmente na planilha (última coluna, depois de NomesAcompanhantes), além de redeployar o Code.gs conforme o passo acima.

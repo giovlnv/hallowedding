@@ -88,10 +88,10 @@ function gravarRsvp(body) {
     sheet.appendRow([
       new Date(),
       body.nome,
-      presencaGuestTexto,
       body.telefone || '',
       body.qtdAcompanhantes || 0,
-      nomesAcompanhantesTexto
+      nomesAcompanhantesTexto,
+      presencaGuestTexto
     ]);
 
     return ContentService

@@ -2,13 +2,11 @@
   const form = document.getElementById('formRsvp');
   const qtdInput = document.getElementById('qtdAcompanhantes');
   const acompanhantesContainer = document.getElementById('acompanhantesContainer');
-  const blocoAcompanhantes = document.getElementById('blocoAcompanhantes');
   const botaoEnviar = document.getElementById('botaoEnviar');
   const mensagemErro = document.getElementById('mensagemErro');
   const confirmacao = document.getElementById('confirmacao');
   const mensagemConfirmacao = document.getElementById('mensagemConfirmacao');
   const nomeInput = document.getElementById('nome');
-  const presencaInputs = Array.from(document.querySelectorAll('input[name="presenca"]'));
 
   const MIN_CARACTERES_BUSCA = 3;
 
@@ -176,22 +174,6 @@
     }
   }
 
-  function atualizarBlocoAcompanhantes(valor) {
-    blocoAcompanhantes.hidden = valor === 'nao';
-    if (valor === 'nao') {
-      qtdInput.value = '0';
-      renderAcompanhantes(0);
-    }
-  }
-
-  presencaInputs.forEach(function (input) {
-    input.addEventListener('change', function () {
-      if (input.checked) {
-        atualizarBlocoAcompanhantes(input.value);
-      }
-    });
-  });
-
   qtdInput.addEventListener('input', function () {
     const qtd = Math.max(0, Math.min(10, parseInt(qtdInput.value, 10) || 0));
     renderAcompanhantes(qtd);
@@ -203,9 +185,7 @@
 
     const presencaSelecionada = document.querySelector('input[name="presenca"]:checked');
     const presenca = presencaSelecionada ? presencaSelecionada.value : 'sim';
-    const acompanhanteInputs = presenca === 'nao'
-      ? []
-      : Array.from(document.querySelectorAll('.acompanhante-input'));
+    const acompanhanteInputs = Array.from(document.querySelectorAll('.acompanhante-input'));
 
     botaoEnviar.disabled = true;
     botaoEnviar.textContent = 'Verificando...';
@@ -243,7 +223,7 @@
           nome: nomeInput.value.trim(),
           presenca: presenca,
           telefone: document.getElementById('telefone').value.trim(),
-          qtdAcompanhantes: presenca === 'nao' ? 0 : (parseInt(qtdInput.value, 10) || 0),
+          qtdAcompanhantes: parseInt(qtdInput.value, 10) || 0,
           acompanhantes: acompanhantes
         };
 
