@@ -18,22 +18,30 @@
   // Fotos pros presentes que têm um equivalente temático. Ver img/README.md
   // para fonte/licença de cada arquivo. Chave = nome exato do presente na planilha.
   const FOTOS_PRESENTES = {
-    'Café pra Giu não ficar emburrada': 'img/cafe.jpg',
+    'Café pra Giu não ficar emburrada': 'img/cafe%20giu.jpg',
     'Ingresso competição de farmar aura': 'img/aura.jpg',
-    'Shot com as noivas': 'img/shot.jpg',
-    'Remedinho pra manter a Gio sã': 'img/remedios.jpg',
+    'Shot com as noivas': 'img/shot%20c%20noivas.jpg',
+    'Remedinho pra manter a Gio sã': 'img/remedio%20gio.jpg',
     'VALE PLAYLIST: 10 min sem Taylor': 'img/taylor.png',
     'VALE PLAYLIST: Pular uma música da Taylor': 'img/taylor-playlist.jpg',
-    'Fura-Fila do buffet': 'img/buffet.jpg',
-    'Terapia pra Giu não smt': 'img/terapia.jpg',
+    'Fura-Fila do buffet': 'img/fura%20fila%20buffet.jpg',
+    'Terapia pra Giu não smt': 'img/terapia%20giu.jpg',
     'Taxa Madrinha (ir todo de preto igual as madrinhas)': 'img/black-dress.jpg',
-    'Dar pitaco no vestido da Giu': 'img/pitaco.jpg',
-    'Patrocinar a lua de mel': 'img/wedding.jpg',
+    'Dar pitaco no vestido da Giu': 'img/vestido%20giu.jpg',
+    'Patrocinar a lua de mel': 'img/patrocinar%20lua%20de%20mel.jpg',
     'Falar mal do Lula por 13 minutos': 'img/lula.jpg',
     'Falar bem do Bolsonaro por 13 minutos': 'img/bolsonaro.jpg',
     'Chamar a carne da Giu de borracha': 'img/carne.jpg',
     'Lingerie pra Gio usar na lua de mel': 'img/lingerie.jpg',
-    'Vale Droga no casamento (meramente ilustrativo)': 'img/bebado.jpg'
+    'Vale Droga no casamento (meramente ilustrativo)': 'img/vale%20droga.jpg',
+    'VALE PLAYLIST: Pedir uma música fora da playlist': 'img/pedir%20musica.jpg',
+    'Churu pras meninas (Olivia, Shadow e Nekoma)': 'img/churu.jpg',
+    'VALE PLAYLIST: 10 min sem KPop': 'img/kpop.jpg',
+    'Chamar a Gio de sapatão por usar terno': 'img/chamar%20de%20sapatao.jpg',
+    'Recusar o convite': 'img/recussar%20convite.jpg',
+    'Dar PT': 'img/dar%20pt.jpg',
+    'Falar sobre mães (tópico sensível)': 'img/falar%20de%20mae.jpg',
+    'Taxa Baranga (usar branco no casamento)': 'img/wedding.jpg'
   };
 
   const VALOR_LIVRE_NOME = 'Patrocinar a lua de mel';
