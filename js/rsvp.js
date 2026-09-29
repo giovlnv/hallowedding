@@ -2,10 +2,13 @@
   const form = document.getElementById('formRsvp');
   const qtdInput = document.getElementById('qtdAcompanhantes');
   const acompanhantesContainer = document.getElementById('acompanhantesContainer');
+  const blocoAcompanhantes = document.getElementById('blocoAcompanhantes');
   const botaoEnviar = document.getElementById('botaoEnviar');
   const mensagemErro = document.getElementById('mensagemErro');
   const confirmacao = document.getElementById('confirmacao');
+  const mensagemConfirmacao = document.getElementById('mensagemConfirmacao');
   const nomeInput = document.getElementById('nome');
+  const presencaInputs = Array.from(document.querySelectorAll('input[name="presenca"]'));
 
   const MIN_CARACTERES_BUSCA = 3;
 
