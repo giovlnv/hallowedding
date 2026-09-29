@@ -25,7 +25,7 @@
     'VALE PLAYLIST: 10 min sem Taylor': 'img/taylor.png',
     'VALE PLAYLIST: Pular uma música da Taylor': 'img/taylor-playlist.jpg',
     'Fura-Fila do buffet': 'img/fura%20fila%20buffet.jpg',
-    'Terapia pra Giu não smt': 'img/terapia%20giu.jpg',
+    'Terapia pra Giu': 'img/terapia%20giu.jpg',
     'Taxa Madrinha (ir todo de preto igual as madrinhas)': 'img/black-dress.jpg',
     'Dar pitaco no vestido da Giu': 'img/vestido%20giu.jpg',
     'Patrocinar a lua de mel': 'img/patrocinar%20lua%20de%20mel.jpg',
